@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "online-clinic-23508"
+  },
+  "targets": {
+    "online-clinic-23508": {
+      "hosting": {
+        "bootstrap-boilerplate-angular": [
+          "online-clinic-23508"
+        ]
+      }
+    }
+  }
+}
