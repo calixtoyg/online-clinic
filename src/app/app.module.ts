@@ -11,13 +11,21 @@ import {environment} from '../environments/environment';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFireAnalyticsModule} from '@angular/fire/analytics';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
+import { UsersComponent } from './components/users/users.component';
+import { CreateUserModalComponent } from './components/create-user-modal/create-user-modal.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { LoginComponent } from './components/login/login.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     WelcomeComponent,
     NavbarHeaderComponent,
-    FooterComponent
+    FooterComponent,
+    UsersComponent,
+    CreateUserModalComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,7 +33,9 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAnalyticsModule,
     AngularFirestoreModule,
-    NgbModule
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

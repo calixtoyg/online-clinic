@@ -1,0 +1,26 @@
+<div class="modal-header">
+  <h4 class="modal-title" i18n="Modal Header | title">Login</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="loginForm">
+    <div class="form-group">
+      <label for="email" i18n="form email">Email:</label>
+      <input id="email" formControlName="email" class="form-control" placeholder="Email" i18n="form email placeholder" type="email">
+    </div>
+    <div class="form-group">
+      <label for="password" i18n="form password">Password:</label>
+      <input id="password" formControlName="password" type="password" class="form-control" placeholder="Password" i18n="form password placeholder">
+    </div>
+
+  </form>
+
+</div>
+<div class="modal-footer">
+  <!--  <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid">Submit</button>-->
+  <button type="button" class="btn btn-primary" (click)="login()" [disabled]="!loginForm.valid">Submit</button>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+
+</div>

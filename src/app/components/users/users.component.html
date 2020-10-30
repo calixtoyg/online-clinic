@@ -1,0 +1,25 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col" i18n="Column name | Column name for name">Name</th>
+    <th scope="col" i18n="Column name | Column name for lastname">Last name</th>
+    <th scope="col" i18n="Column name | Column name for profile">Profile</th>
+    <th scope="col" i18n="Column name | Column name for specialization">Specialization</th>
+    <th scope="col" i18n="Column name | Column name for firstimage">Picture #1</th>
+    <th scope="col" i18n="Column name | Column name for secondimage">Picture #2</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of users | async; index as i">
+    <td>{{user.name}}</td>
+    <td>{{user.lastname}}</td>
+    <td>{{user.profile}}</td>
+    <td>{{user.specialization}}</td>
+    <td><img [src]="user.firstImage" class="mr-2" style="width: 20px" /></td>
+    <td><img [src]="user.secondImage" class="mr-2" style="width: 20px" /></td>
+<!--    <td><img [src]="" class="mr-2" style="width: 20px" /></td>-->
+<!--    <td><img [src]="" class="mr-2" style="width: 20px" /></td>-->
+  </tr>
+  </tbody>
+</table>
+<img [src]="imageSrc"/>

@@ -1,0 +1,54 @@
+<div class="modal-header">
+  <h4 class="modal-title" i18n="Modal Header | title">Create User </h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="userForm">
+    <div class="form-group">
+      <label for="name" i18n="form name">Name:</label>
+      <input id="name" formControlName="name" class="form-control" placeholder="Name" i18n="form name placeholder">
+    </div>
+    <div class="form-group">
+      <label for="lastname" i18n="form lastname">Lastname:</label>
+      <input id="lastname" formControlName="lastname" class="form-control" placeholder="Lastname" i18n="form lastname placeholder">
+    </div>
+    <div class="form-group">
+      <label for="email" i18n="form email">Email:</label>
+      <input id="email" formControlName="email" class="form-control" placeholder="Email" i18n="form email placeholder" type="email">
+    </div>
+    <div class="form-group">
+      <label for="password" i18n="form password">Password:</label>
+      <input id="password" formControlName="password" type="password" class="form-control" placeholder="Password" i18n="form password placeholder">
+    </div>
+    <label for="profile">Profile</label>
+    <select class="form-control" formControlName="profile" id="profile" name="profile">
+<!--      <div *ngFor="let option in options">-->
+        <option (click)="setProfile(options[0])">{{options[0]}}</option>
+        <option (click)="setProfile(options[1])">{{options[1]}}</option>
+        <option (click)="setProfile(options[2])">{{options[2]}}</option>
+<!--      <option *ngFor="let option in options" [ngValue]="profile">{{option}}</option>-->
+<!--      </div>-->
+    </select>
+    <br>
+    <div class="form-group" *ngIf="this.userForm.value.profile === 'professional'">
+      <label for="specialties" i18n="form specialties">Specialties</label>
+      <input id="specialties" class="form-control" placeholder="Write specialities separated by comma" i18n="form specialties placeholder">
+    </div>
+    <div class="form-group" *ngIf="this.userForm.value.profile === 'patient'">
+      <label for="profile_1" i18n="form specialties">Profile picture</label>
+      <input id="profile_1" class="form-control" placeholder="Write specialities separated by comma" i18n="form profile picture 1 placeholder">
+      <label for="profile_2" i18n="form specialties">Profile picture 2</label>
+      <input id="profile_2" class="form-control" placeholder="Write specialities separated by comma" i18n="form profile picture 2 placeholder">
+    </div>
+
+  </form>
+
+</div>
+<div class="modal-footer">
+<!--  <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid">Submit</button>-->
+  <button type="button" class="btn btn-primary" (click)="testForm()">Submit</button>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+
+</div>
