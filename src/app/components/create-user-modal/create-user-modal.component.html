@@ -25,22 +25,35 @@
     <label for="profile">Profile</label>
     <select class="form-control" formControlName="profile" id="profile" name="profile">
 <!--      <div *ngFor="let option in options">-->
-        <option (click)="setProfile(options[0])">{{options[0]}}</option>
-        <option (click)="setProfile(options[1])">{{options[1]}}</option>
-        <option (click)="setProfile(options[2])">{{options[2]}}</option>
+<!--        <option (click)="setProfile(options[0])">{{options[0]}}</option>-->
+<!--        <option (click)="setProfile(options[1])">{{options[1]}}</option>-->
+<!--        <option (click)="setProfile(options[2])">{{options[2]}}</option>-->
+      <option *ngFor="let option of options" [value]="option"
+      >{{option}}</option
+      >
 <!--      <option *ngFor="let option in options" [ngValue]="profile">{{option}}</option>-->
 <!--      </div>-->
     </select>
+    <div class="invalid-feedback">
+      Please choose a username.
+    </div>
     <br>
     <div class="form-group" *ngIf="this.userForm.value.profile === 'professional'">
-      <label for="specialties" i18n="form specialties">Specialties</label>
-      <input id="specialties" class="form-control" placeholder="Write specialities separated by comma" i18n="form specialties placeholder">
+      <label for="specializations" i18n="form specialties">Specializations</label>
+      <input id="specializations" class="form-control" placeholder="Write specialities separated by comma" i18n="form specialties placeholder" formControlName="specializations" >
     </div>
     <div class="form-group" *ngIf="this.userForm.value.profile === 'patient'">
-      <label for="profile_1" i18n="form specialties">Profile picture</label>
-      <input id="profile_1" class="form-control" placeholder="Write specialities separated by comma" i18n="form profile picture 1 placeholder">
-      <label for="profile_2" i18n="form specialties">Profile picture 2</label>
-      <input id="profile_2" class="form-control" placeholder="Write specialities separated by comma" i18n="form profile picture 2 placeholder">
+      <div class="custom-file">
+        <input type="file" accept="image/*" class="custom-file-input" id="firstImage" formControlName="firstImage" (change)="onFileChange($event, 'firstImage')">
+        <label class="custom-file-label" for="firstImage">{{firstImage.name || 'First profile picture'}}</label>
+        <div class="invalid-feedback">Example invalid custom file feedback</div>
+      </div>
+      <br>
+      <div class="custom-file">
+        <input type="file" accept="image/*" class="custom-file-input" id="secondImage" formControlName="secondImage" (change)="onFileChange($event, 'secondImage')">
+        <label class="custom-file-label" for="secondImage">{{secondImage.name || 'Second profile picture'}}</label>
+        <div class="invalid-feedback">Example invalid custom file feedback</div>
+      </div>
     </div>
 
   </form>
@@ -48,7 +61,7 @@
 </div>
 <div class="modal-footer">
 <!--  <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid">Submit</button>-->
-  <button type="button" class="btn btn-primary" (click)="testForm()">Submit</button>
-  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+  <button type="button" class="btn btn-primary" (click)="submit()">Submit</button>
+  <button type="button" id="submit-user-creation" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
 
 </div>

@@ -10,6 +10,7 @@ import {AuthenticationService} from '../../services/authentication.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  loginSuccessful: boolean;
 
   constructor(public activeModal: NgbActiveModal, fb: FormBuilder, public authentication: AuthenticationService) {
     this.loginForm = fb.group({
@@ -26,8 +27,14 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.authentication
         .login(this.loginForm.value.email, this.loginForm.value.password)
-        .then(() => this.activeModal.close(true))
-        .catch((error) => this.activeModal.close(false));
+        .then(() => {
+          this.loginSuccessful = true;
+          this.activeModal.close(true);
+        })
+        .catch((error) => {
+          this.loginSuccessful = false;
+          this.activeModal.close(false);
+        });
     }
   }
 }

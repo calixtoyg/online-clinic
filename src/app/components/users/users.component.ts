@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {AuthenticationService} from '../../services/authentication.service';
-import {finalize, map, mapTo, mergeAll, mergeMap, switchMap, tap} from 'rxjs/operators';
-import {combineLatest, forkJoin, from, merge, Observable, of, pipe} from 'rxjs';
+import {map, mergeMap} from 'rxjs/operators';
+import {combineLatest, Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-users',
@@ -21,9 +21,12 @@ export class UsersComponent implements OnInit {
 
 
     if (this.authentication.isLoggedIn()) {
-      this.users = firestore.collection('users').valueChanges({idField: 'uuid'}).pipe(map(users => {
-        return this.mapUrlToUser(users);
-      })).pipe(mergeMap(this.toUsers));
+      this.users = firestore.collection('users').valueChanges({idField: 'uuid'}).pipe(
+        map(users => {
+          return this.mapUrlToUser(users);
+        }),
+        mergeMap(this.toUsers)
+      );
     }
   }
 
@@ -40,16 +43,13 @@ export class UsersComponent implements OnInit {
     //     of(user));
     // });
     // check this
-    let observables = users.map((user) => {
-        return combineLatest([this.storage.ref(user.uuid + `_${1}.jpg`).getDownloadURL(), this.storage.ref(user.uuid + `_${2}.jpg`).getDownloadURL()])
-          .pipe(map(value => {
-            console.log('tapping', value);
-            return {firstImage: value[0], secondImage: value[1], ...user};
-          }));
-
-      }
-    );
-    return observables;
+    return users.map((user) => combineLatest(
+      [this.getDownloadURL(user, 1), this.getDownloadURL(user, 2)]
+    )
+      .pipe(
+        map(value => {
+          return {firstImage: value[0], secondImage: value[1], ...user};
+        })));
 
     // promises.push(.toPromise());
     // promises.push(this.storage.ref(user.uuid + `_${2}.jpg`).getDownloadURL().toPromise());
@@ -61,6 +61,14 @@ export class UsersComponent implements OnInit {
     //   userToReturn = user;
     // });
     // return userToReturn;
+  }
+
+  private getDownloadURL(user, numberOfPicture) {
+    if (user.profile.toLowerCase() === 'patient') {
+      return this.storage.ref(user.uuid + `_${numberOfPicture}.jpg`).getDownloadURL();
+    } else {
+      return of({});
+    }
   }
 
   ngOnInit(): void {

@@ -21,6 +21,6 @@
 <div class="modal-footer">
   <!--  <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid">Submit</button>-->
   <button type="button" class="btn btn-primary" (click)="login()" [disabled]="!loginForm.valid">Submit</button>
-  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close(loginSuccessful)">Close</button>
 
 </div>
