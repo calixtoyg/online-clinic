@@ -15,6 +15,7 @@ import { UsersComponent } from './components/users/users.component';
 import { CreateUserModalComponent } from './components/create-user-modal/create-user-modal.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
+import { TestComponent } from './components/test/test.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { LoginComponent } from './components/login/login.component';
     UsersComponent,
     CreateUserModalComponent,
     LoginComponent,
+    TestComponent,
   ],
   imports: [
     BrowserModule,

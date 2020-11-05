@@ -3,6 +3,6 @@ export interface UserCreation {
   lastname: string;
   profile: string;
   specializations?: [string];
-  firstImage?: string;
-  secondImage?: string;
+  firstImage?: File;
+  secondImage?: File;
 }

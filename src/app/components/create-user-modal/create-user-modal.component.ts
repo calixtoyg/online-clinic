@@ -24,7 +24,7 @@ export class CreateUserModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('submit-user-creation');
+    // window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('submit-user-creation');
     this.userForm = this.fb.group({
       name: ['', Validators.required],
       lastname: ['', Validators.required],
