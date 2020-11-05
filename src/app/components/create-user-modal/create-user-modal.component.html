@@ -57,11 +57,15 @@
     </div>
 
   </form>
+  <div id="submit-user-creation">
 
+  </div>
 </div>
 <div class="modal-footer">
+
 <!--  <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid">Submit</button>-->
-  <button type="button" class="btn btn-primary" (click)="submit()">Submit</button>
-  <button type="button" id="submit-user-creation" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+  <button type="button" class="btn btn-primary" [disabled]="disableSubmit" (click)="submit()">Submit</button>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
 
 </div>
+
