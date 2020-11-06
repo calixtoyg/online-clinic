@@ -10,7 +10,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let user of users | async; index as i">
+  <tr *ngFor="let user of users | async | patients; index as i">
     <td>{{user.name}}</td>
     <td>{{user.lastname}}</td>
     <td>{{user.profile}}</td>
@@ -22,4 +22,3 @@
   </tr>
   </tbody>
 </table>
-<img [src]="imageSrc"/>

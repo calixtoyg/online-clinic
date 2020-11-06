@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {AuthenticationService} from '../../services/authentication.service';
@@ -10,24 +10,17 @@ import {combineLatest, Observable, of} from 'rxjs';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit  {
   users: Observable<any>;
   imageSrc: string;
   images: [];
 
 
   constructor(public firestore: AngularFirestore, public storage: AngularFireStorage, public authentication: AuthenticationService) {
-    this.users = firestore.collection('users').valueChanges({idField: 'uuid'});
+    // this.users = firestore.collection('users').valueChanges({idField: 'uuid'});
 
 
-    if (this.authentication.isLoggedIn()) {
-      this.users = firestore.collection('users').valueChanges({idField: 'uuid'}).pipe(
-        map(users => {
-          return this.mapUrlToUser(users);
-        }),
-        mergeMap(this.toUsers)
-      );
-    }
+
   }
 
   toUsers(users) {
@@ -72,5 +65,16 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.authentication.isLoggedIn()) {
+      this.users = this.firestore.collection('users').valueChanges({idField: 'uuid'}).pipe(
+        map(users => {
+          return this.mapUrlToUser(users);
+        }),
+        mergeMap(this.toUsers)
+      );
+    }
   }
+
+
+
 }

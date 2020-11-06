@@ -16,6 +16,14 @@ import { CreateUserModalComponent } from './components/create-user-modal/create-
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { TestComponent } from './components/test/test.component';
+import { PatientsPipe } from './pipes/patients.pipe';
+import { AppointmentsComponent } from './components/appointments/appointments.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PatientsComponent } from './components/patients/patients.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
 
 
 @NgModule({
@@ -28,6 +36,9 @@ import { TestComponent } from './components/test/test.component';
     CreateUserModalComponent,
     LoginComponent,
     TestComponent,
+    PatientsPipe,
+    AppointmentsComponent,
+    PatientsComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,7 +48,12 @@ import { TestComponent } from './components/test/test.component';
     AngularFirestoreModule,
     NgbModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatStepperModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
