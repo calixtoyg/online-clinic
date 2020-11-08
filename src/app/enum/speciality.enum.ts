@@ -1,10 +1,10 @@
 export enum Speciality {
-  ALLERGY= 'ALLERGY',
-  ANESTHESIOLOGY = 'anesthesiology',
-  DERMATOLOGY = 'dermatology',
-  NEUROLOGY = 'neurology',
-  GYNECOLOGY = 'gynecology',
-  SURGERY = 'surgery',
-  UROLOGY = 'urology',
-  TRAUMATOLOGY = 'traumatology'
+  ALLERGIST= 'allergist',
+  ANESTHESIOLOGIST = 'anesthesiologist',
+  DERMATOLOGIST = 'dermatologist',
+  NEUROLOGIST = 'neurologist',
+  GYNECOLOGIST = 'gynecologist',
+  SURGEON = 'surgeon',
+  UROLOGIST = 'urologist',
+  TRAUMATOLOGIST = 'traumatologist'
 }

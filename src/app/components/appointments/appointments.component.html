@@ -3,31 +3,47 @@
 <!--    <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">-->
 <!--      {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}-->
 <!--    </button>-->
-    <mat-vertical-stepper [linear]="true" #stepper>
-      <mat-step [stepControl]="firstFormGroup">
-        <form [formGroup]="firstFormGroup">
-          <ng-template matStepLabel>Fill out your name</ng-template>
-          <mat-form-field>
-            <mat-label>Name</mat-label>
-            <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
-          </mat-form-field>
-          <div>
-            <button mat-button matStepperNext>Next</button>
-          </div>
+    <mat-vertical-stepper linear  #stepper>
+      <mat-step [stepControl]="specialityForm">
+        <form [formGroup]="specialityForm">
+          <ng-template matStepLabel>{{specialityMessage}}</ng-template>
+<!--          <mat-form-field>-->
+<!--            <mat-label>Name</mat-label>-->
+<!--            <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>-->
+<!--          </mat-form-field>-->
+          <mat-action-list>
+            <button mat-list-item matStepperNext (click)="setSpeciality(speciality, stepper)" *ngFor="let speciality of specialities">{{speciality}}</button>
+          </mat-action-list>
+<!--          <div>-->
+<!--            <button mat-button matStepperNext>Next</button>-->
+<!--          </div>-->
         </form>
       </mat-step>
-      <mat-step [stepControl]="secondFormGroup">
-        <form [formGroup]="secondFormGroup">
-          <ng-template matStepLabel>Fill out your address</ng-template>
-          <mat-form-field>
-            <mat-label>Address</mat-label>
-            <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                   required>
+      <mat-step [stepControl]="professionalForm">
+        <form [formGroup]="professionalForm">
+          <ng-template matStepLabel>{{professionalMessage}}</ng-template>
+          <mat-action-list>
+            <button mat-list-item matStepperNext (click)="setProfessional(pro, stepper)" *ngFor="let pro of professionals">{{pro.name}}</button>
+          </mat-action-list>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="dateForm">
+        <form [formGroup]="dateForm">
+          <ng-template matStepLabel>{{dateForm.value.appointmentDate ? dateForm.value.appointmentDate.toISOString().split('T')[0] : 'Select appointment date'}}</ng-template>
+          <mat-form-field appearance="fill">
+            <mat-label>Choose a date</mat-label>
+            <input matInput (dateInput)="setDate($event, stepper)" [matDatepicker]="datePicker" [matDatepickerFilter]="myFilter" formGroupName="appointmentDate">
+            <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+            <mat-datepicker #datePicker></mat-datepicker>
           </mat-form-field>
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
-          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="hourForm">
+        <form [formGroup]="hourForm">
+          <ng-template matStepLabel>{{hourForm.value.appointmentHour ? hourForm.value.appointmentHour : 'Select appointment hour'}}</ng-template>
+          <mat-action-list>
+            <button mat-list-item matStepperNext (click)="setHour(hour, stepper)" *ngFor="let hour of hours">{{hour}}</button>
+          </mat-action-list>
         </form>
       </mat-step>
       <mat-step>
