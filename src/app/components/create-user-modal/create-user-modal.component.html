@@ -38,11 +38,36 @@
       Please choose a username.
     </div>
     <br>
-    <div class="form-group" *ngIf="this.userForm.value.profile === 'professional'">
-      <label for="specializations" i18n="form specialties">Specializations</label>
-      <input id="specializations" class="form-control" placeholder="Write specialities separated by comma" i18n="form specialties placeholder" formControlName="specializations" >
+    <div class="form-group" *ngIf="this.userForm.value.profile.toLowerCase() === 'medic'">
+      <mat-form-field class="example-chip-list">
+        <mat-chip-list #chipList aria-label="Specialization selection">
+          <mat-chip
+            *ngFor="let speciality of chipSpecializations"
+            selectable
+            removable
+            (removed)="remove(speciality)">
+            {{capitalize(speciality)}}
+            <mat-icon matChipRemove >cancel</mat-icon>
+          </mat-chip>
+          <input
+            matInput
+            #specialityInput
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [formControl]="specializationForm"
+            [matAutocomplete]="auto"
+            placeholder="Select Specialization"
+            [matChipInputFor]="chipList"
+            (matChipInputTokenEnd)="addSpecialization($event)"
+          >
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedSpeciality($event)">
+          <mat-option *ngFor="let speciality of filteredSpecializations | async" [value]="speciality">
+            {{speciality}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
     </div>
-    <div class="form-group" *ngIf="this.userForm.value.profile === 'patient'">
+    <div class="form-group" *ngIf="this.userForm.value.profile.toLowerCase() === 'patient'">
       <div class="custom-file">
         <input type="file" accept="image/*" class="custom-file-input" id="firstImage" formControlName="firstImage" (change)="onFileChange($event, 'firstImage')">
         <label class="custom-file-label" for="firstImage">{{firstImage.name || 'First profile picture'}}</label>

@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-
+import {MatChipsModule} from '@angular/material/chips';
 import {MatListModule} from '@angular/material/list';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
@@ -26,8 +26,12 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import {MatIconModule} from '@angular/material/icon';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -43,6 +47,7 @@ import {MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter'
     PatientsPipe,
     AppointmentsComponent,
     PatientsComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,9 +63,13 @@ import {MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter'
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
+    MatAutocompleteModule,
     MatListModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatChipsModule,
+    MatNativeDateModule,
+    MatProgressSpinnerModule,
+    MatIconModule
   ],
   providers: [MatNativeDateModule,
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}

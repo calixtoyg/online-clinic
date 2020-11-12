@@ -1,8 +1,10 @@
 import {Injectable} from '@angular/core';
 import {UserCreation} from '../model/user-creation';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {AngularFireStorage} from '@angular/fire/storage';
 import {AuthenticationService} from './authentication.service';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {Profile} from '../enum/profile.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +27,18 @@ export class UsersService {
     //   ).then(() => Promise.all([this.angularFireStorage.ref(email + '_1.jpg').put(userToCreate.firstImage),
     //     this.angularFireStorage.ref(email + '_2.jpg').put(userToCreate.secondImage)])
     //   )).catch(console.error);
+  }
+
+  getUserWithProfile(profile: Profile): Observable<UserCreation[]> {
+    return this.store.collection<UserCreation>('users').snapshotChanges().pipe(
+      map(dataArray => dataArray.map(each => {
+        const data = each.payload.doc.data() as UserCreation;
+        data.email = each.payload.doc.id;
+        return data;
+      }))
+    ).pipe(map(arrayOfUsers => {
+        return arrayOfUsers.filter(user => user.profile.toLowerCase() === profile);
+      })
+    );
   }
 }
