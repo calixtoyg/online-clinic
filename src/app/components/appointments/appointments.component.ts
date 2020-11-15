@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Speciality} from '../../enum/speciality.enum';
-import {MatVerticalStepper} from '@angular/material/stepper';
+import {MatStepper, MatVerticalStepper} from '@angular/material/stepper';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {UsersService} from '../../services/users.service';
 import {UserCreation} from '../../model/user-creation';
@@ -13,14 +13,23 @@ import {map, mergeMap, startWith, tap} from 'rxjs/operators';
 import {CalendarService} from '../../services/calendar.service';
 import {Schedule} from '../../model/schedule';
 import {Appointment} from '../../model/appointment';
+import {PartOfDay} from '../../enum/part-of-day.enum';
+import {DatePipe} from '@angular/common';
 
 
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html',
-  styleUrls: ['./appointments.component.css']
+  styleUrls: ['./appointments.component.css'],
+  providers: [DatePipe]
 })
 export class AppointmentsComponent implements OnInit {
+
+
+  constructor(private formBuilder: FormBuilder, private usersService: UsersService, private calendarService: CalendarService, private datePipe: DatePipe) {
+  }
+
+  year = new Date().getFullYear();
   isLinear: boolean;
   specialities: any[];
   specialityForm: FormGroup;
@@ -38,6 +47,9 @@ export class AppointmentsComponent implements OnInit {
   filteredPatients: Observable<UserCreation[]>;
   calendar: Calendar;
   calendars: Observable<Calendar[]>;
+  professionalEmail: Observable<string>;
+  chooseAnotherDate: boolean;
+  @ViewChild('stepper') stepper: MatStepper;
 
   myFilter = (d: Date | null): boolean => {
     const day = (d || new Date()).getDay();
@@ -46,9 +58,6 @@ export class AppointmentsComponent implements OnInit {
 
   };
 
-
-  constructor(private formBuilder: FormBuilder, private usersService: UsersService, private calendarService: CalendarService) {
-  }
 
   ngOnInit(): void {
     this.specialityForm = this.formBuilder.group({
@@ -89,27 +98,38 @@ export class AppointmentsComponent implements OnInit {
     });
     this.calendars = this.calendarService.getCalendarsByYear(new Date().getFullYear());
 
+    this.professionalEmail = this.professionalForm.get('id').valueChanges;
+
   }
 
 
-  setSpeciality(speciality: string, stepper: MatVerticalStepper): void {
+  setSpeciality(speciality: string): void {
     this.specialityForm.setValue({speciality});
     this.specialityMessage = speciality;
-    // TODO remover
-    // this.calendarService.saveCalendars(this.mockedMonths);
-    stepper.next();
+    this.stepper.next();
   }
 
-  setProfessional(professional: any, stepper: MatVerticalStepper): void {
+  setProfessional(professional: any): void {
     this.professionalForm.setValue({professional: professional.name, id: professional.email});
     this.professionalMessage = professional.name;
-    stepper.next();
+    this.stepper.next();
   }
 
   setDate($event: MatDatepickerInputEvent<Date, unknown>, stepper: MatVerticalStepper): void {
     this.dateForm.setValue({appointmentDate: $event.value});
     this.setFilteredHours($event);
     stepper.next();
+  }
+
+  setDateForPossibleDates($event): void {
+    let appointmentHour;
+    appointmentHour = this.datePipe.transform($event, 'HH:mm');
+    this.dateForm.setValue({appointmentDate: $event});
+    // @ts-ignore
+    this.setFilteredHours({value: $event});
+    this.hourForm.setValue({appointmentHour});
+    this.nextStep();
+    this.nextStep();
   }
 
   private setFilteredHours($event: MatDatepickerInputEvent<Date, unknown>): void {
@@ -121,15 +141,6 @@ export class AppointmentsComponent implements OnInit {
         .find(value => value);
       this.hours = this.getAppointments();
     });
-
-
-    // return medic ? this.hours.filter(hour => {
-    //
-    //
-    //   return appointments.some(appointmentHour => appointmentHour === hour);
-    // }) : this.hours;
-
-
   }
 
   private getAppointments(): string[] {
@@ -138,9 +149,9 @@ export class AppointmentsComponent implements OnInit {
     return appointments ? this.hours.filter(hour => !appointmentHours.includes(hour)) : this.hours;
   }
 
-  setHour(appointmentHour: string, stepper: MatVerticalStepper): void {
+  setHour(appointmentHour: string): void {
     this.hourForm.setValue({appointmentHour});
-    stepper.next();
+    this.stepper.next();
   }
 
   private _filter(value: string): Observable<UserCreation[]> {
@@ -148,34 +159,8 @@ export class AppointmentsComponent implements OnInit {
     return this.patients.pipe(map(patients => patients.filter(option => option.email.indexOf(filterValue) === 0)));
   }
 
-  // let getFromToWorkingHours  = (from, to) => {
-  //   const fromSplit = from.split(':');
-  //   const fromHour = new Date(new Date().setHours(Number(fromSplit[0]), fromSplit[1], 0));
-  //   let fromHourCopy = new Date(new Date().setHours(Number(fromSplit[0]), fromSplit[1], 0));
-  //   const toSplit = to.split(':');
-  //   const toHour = new Date(new Date().setHours(Number(toSplit[0]), toSplit[1], 0));
-  //   const hoursDifference = toHour.getHours() - fromHour.getHours();
-  //   console.log(hoursDifference);
-  //   const hoursArray = [];
-  //   for (let i = 0; i < hoursDifference * 2; i++) {
-  //     const pairHour = fromHourCopy.getHours().toString() + ':' + '00';
-  //     const impairHour = fromHourCopy.getHours().toString() + ':' + '30';
-  //     if (i === 0) {
-  //       hoursArray.push(pairHour);
-  //     } else {
-  //       if (i % 2 === 0) {
-  //         hoursArray.push(pairHour);
-  //       } else {
-  //         hoursArray.push(impairHour)
-  //       }
-  //     }
-  //     fromHourCopy.setMinutes(fromHourCopy.getMinutes() + 30);
-  //   }
-  //   return hoursArray;
-  // }
 
-
-  saveAppointment() {
+  saveAppointment(): void {
     this.loadingSpinner = true;
     // TODO check all forms are valid first
     let savingCalendar = {} as Calendar;
@@ -205,18 +190,26 @@ export class AppointmentsComponent implements OnInit {
     this.calendarService.saveCalendar(savingCalendar, this.calendar?.id).then(() => {
       // TODO disable loading spinner
       this.loadingSpinner = false;
-      console.log("Calendar SAVED");
+      console.log('Calendar SAVED');
     }).catch(error => {
       this.loadingSpinner = false;
       console.error(error);
     });
-    // TODO saving
-
-
-
   }
 
-  nextStep(stepper: MatVerticalStepper): void {
-    stepper.next();
+  nextStep(): void {
+    this.stepper.next();
+  }
+
+  getAfternoon(): PartOfDay {
+    return PartOfDay.AFTERNOON;
+  }
+
+  getMorning(): PartOfDay {
+    return PartOfDay.MORNING;
+  }
+
+  toggleChooseAnotherDate(): void {
+    this.chooseAnotherDate = !this.chooseAnotherDate;
   }
 }

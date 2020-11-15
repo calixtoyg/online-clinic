@@ -32,6 +32,7 @@ import {MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter'
 import {MatIconModule} from '@angular/material/icon';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { PossibleDatesComponent } from './components/possible-dates/possible-dates.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     AppointmentsComponent,
     PatientsComponent,
     SpinnerComponent,
+    PossibleDatesComponent,
   ],
   imports: [
     BrowserModule,

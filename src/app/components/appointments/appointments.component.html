@@ -17,7 +17,7 @@
         <!--            <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>-->
         <!--          </mat-form-field>-->
         <mat-action-list>
-          <button mat-list-item matStepperNext (click)="setSpeciality(speciality, stepper)" *ngFor="let speciality of specialities">{{speciality}}</button>
+          <button mat-list-item matStepperNext (click)="setSpeciality(speciality)" *ngFor="let speciality of specialities">{{speciality}}</button>
         </mat-action-list>
         <!--          <div>-->
         <!--            <button mat-button matStepperNext>Next</button>-->
@@ -28,26 +28,61 @@
       <form [formGroup]="professionalForm">
         <ng-template matStepLabel>{{professionalMessage}}</ng-template>
         <mat-action-list>
-          <button mat-list-item matStepperNext (click)="setProfessional(pro, stepper)" *ngFor="let pro of professionals | async">{{pro.name + ' ' + pro.lastname}}</button>
+          <button mat-list-item matStepperNext (click)="setProfessional(pro)" *ngFor="let pro of professionals | async">{{pro.name + ' ' + pro.lastname}}</button>
         </mat-action-list>
       </form>
     </mat-step>
     <mat-step [stepControl]="dateForm">
-      <form [formGroup]="dateForm">
-        <ng-template matStepLabel>{{dateForm.value.appointmentDate ? dateForm.value.appointmentDate.toISOString().split('T')[0] : 'Select appointment date'}}</ng-template>
-        <mat-form-field appearance="fill">
-          <mat-label>Choose a date</mat-label>
-          <input matInput (dateInput)="setDate($event, stepper)" [matDatepicker]="datePicker" [matDatepickerFilter]="myFilter" formGroupName="appointmentDate">
-          <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
-          <mat-datepicker #datePicker></mat-datepicker>
-        </mat-form-field>
-      </form>
+      <ng-template matStepLabel>{{dateForm.value.appointmentDate ? dateForm.value.appointmentDate.toISOString().split('T')[0] : 'Select appointment date'}}</ng-template>
+
+      <!--      <form [formGroup]="dateForm">-->
+      <div class="container">
+        <button type="button" class="btn btn-sm btn-primary mt-2" (click)="toggleChooseAnotherDate()">Let me choose another date date</button>
+        <div *ngIf="!chooseAnotherDate">
+          <div class="row align-items-center col-12">
+            <p class="h5 mt-2">
+              Possibles fechas de mañana:
+            </p>
+
+          </div>
+          <div class="row align-items-end">
+            <div class="col-sm-12 col-md-12">
+              <app-possible-dates (selectedDate)="setDateForPossibleDates($event)" [professionalEmail]="professionalEmail | async" [days]="3" [options]="3" [partOfDay]="getMorning()" [year]="year"></app-possible-dates>
+            </div>
+
+          </div>
+          <div class="row align-items-center col-12">
+            <p class="h5 mt-2">
+              Possibles fechas de tarde:
+            </p>
+
+          </div>
+          <div class="row align-items-end">
+            <div class="col-sm-12 col-md-12">
+              <app-possible-dates (selectedDate)="setDateForPossibleDates($event)" [professionalEmail]="professionalEmail | async" [days]="3" [options]="3" [partOfDay]="getAfternoon()" [year]="year"></app-possible-dates>
+            </div>
+
+          </div>
+        </div>
+        <div *ngIf="chooseAnotherDate">
+          <form [formGroup]="dateForm">
+            <mat-form-field appearance="fill">
+              <mat-label>Choose a date</mat-label>
+              <input matInput (dateInput)="setDate($event)" [matDatepicker]="datePicker" [matDatepickerFilter]="myFilter" formGroupName="appointmentDate">
+              <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+              <mat-datepicker #datePicker></mat-datepicker>
+            </mat-form-field>
+          </form>
+        </div>
+
+      </div>
+      <!--      </form>-->
     </mat-step>
     <mat-step [stepControl]="hourForm">
       <form [formGroup]="hourForm">
         <ng-template matStepLabel>{{hourForm.value.appointmentHour ? hourForm.value.appointmentHour : 'Select appointment hour'}}</ng-template>
         <mat-action-list>
-          <button mat-list-item matStepperNext (click)="setHour(hour, stepper)" *ngFor="let hour of hours">{{hour}}</button>
+          <button mat-list-item matStepperNext (click)="setHour(hour)" *ngFor="let hour of hours">{{hour}}</button>
         </mat-action-list>
       </form>
     </mat-step>
@@ -61,7 +96,7 @@
                  matInput
                  formControlName="email"
                  [matAutocomplete]="auto">
-          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="nextStep(stepper)">
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="nextStep()">
             <mat-option *ngFor="let patient of filteredPatients | async" [value]="patient.email">
               {{patient.email}}
             </mat-option>
@@ -72,15 +107,15 @@
     <mat-step>
       <ng-template matStepLabel>Save appointment</ng-template>
       <div class="d-flex flex-row-reverse">
-<!--      <div class="p-2">-->
-<!--        <button type="button" class="btn btn-sm btn-outline-primary" (click)="stepper.reset()">Reset</button>-->
-<!--      </div>-->
-      <div class="p-2">
-        <button type="button" class="btn btn-sm btn-warning" matStepperPrevious>Back</button>
-      </div>
-      <div class="p-2">
-        <button type="button" class="btn btn-sm btn-primary" (click)="saveAppointment()">Save</button>
-      </div>
+        <!--      <div class="p-2">-->
+        <!--        <button type="button" class="btn btn-sm btn-outline-primary" (click)="stepper.reset()">Reset</button>-->
+        <!--      </div>-->
+        <div class="p-2">
+          <button type="button" class="btn btn-sm btn-warning" matStepperPrevious>Back</button>
+        </div>
+        <div class="p-2">
+          <button type="button" class="btn btn-sm btn-primary" (click)="saveAppointment()">Save</button>
+        </div>
       </div>
     </mat-step>
   </mat-vertical-stepper>
