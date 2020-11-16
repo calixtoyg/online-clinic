@@ -78,7 +78,7 @@ export class PossibleDatesComponent implements OnInit, OnChanges {
     if (today.getDay() === 6) {
       return new Date(new Date().setDate(today.getDate() + 2));
     }
-    if (today.getDate() === 7) {
+    if (today.getDay() === 0) {
       return new Date(new Date().setDate(today.getDate() + 1));
     }
     return today;

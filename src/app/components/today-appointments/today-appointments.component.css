@@ -1,0 +1,9 @@
+.green-icon {
+  color: seagreen;
+}
+.table > tbody > tr > td {
+  vertical-align: middle;
+}
+/*.btn-group {*/
+/*  display: flex;*/
+/*}*/

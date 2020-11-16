@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {Calendar} from '../model/calendar';
-import {Observable} from 'rxjs';
+import {Observable, pipe} from 'rxjs';
 import {UserCreation} from '../model/user-creation';
-import {map} from 'rxjs/operators';
+import {first, map, take} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -50,5 +50,33 @@ export class CalendarService {
         return data;
       }))
     );
+  }
+
+  getCalendarsByYearMonthDay({year, month, day}: { year: number, month: number, day: number }): Observable<Calendar[]> {
+    return this.store.collection<Calendar>('calendar', ref => ref
+      .where('year', '==', year)
+      .where('month', '==', month)
+      .where('day', '==', day))
+      .snapshotChanges()
+      .pipe(
+        map(dataArray => dataArray.map(each => {
+          const data = each.payload.doc.data() as Calendar;
+          data.id = each.payload.doc.id;
+          return data;
+        }))
+      ).pipe(
+        first()
+      );
+  }
+
+  getCalendarById(calendarId: string): Promise<Calendar> {
+    return this.store.doc<Calendar>('calendar/' + calendarId).snapshotChanges()
+      .pipe(
+        map(dataArray => {
+          const data = dataArray.payload.data() as Calendar;
+          data.id = dataArray.payload.id;
+          return data;
+        }))
+      .pipe(take(1)).toPromise();
   }
 }

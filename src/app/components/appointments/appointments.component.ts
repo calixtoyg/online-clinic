@@ -170,6 +170,8 @@ export class AppointmentsComponent implements OnInit {
     if (index !== -1 && index !== undefined) {
       savingCalendar = this.calendar;
       const medicSchedule: Schedule = this.calendar.schedule[index];
+
+      // @ts-ignore
       medicSchedule.appointments = [...medicSchedule.appointments, {email, hour}];
       savingCalendar.schedule[index] = {
         medicName: this.professionalForm.value.professional,

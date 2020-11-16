@@ -1,0 +1,48 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Email</th>
+    <th scope="col">Time</th>
+    <th scope="col">Review</th>
+    <th scope="col">State</th>
+    <th scope="col">Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let appointment of appointments | async | hour:'asc'; index as i">
+    <td >{{ i + 1 }}</td>
+    <td>
+      {{ appointment.email}}
+    </td>
+    <td>
+      {{ appointment.hour}}
+    </td>
+    <td>
+      {{ appointment.review}}
+    </td>
+    <td>
+<!--      [ngClass]="appointment.done ? 'green-icon' : ''"-->
+            <mat-icon matTooltip="Appointment was completed" class="green-icon">{{appointment.done ? 'done' : 'pending'}}</mat-icon>
+            <mat-icon  class="green-icon">{{appointment.done ? 'done' : 'pending'}}</mat-icon>
+
+    </td>
+    <td>
+      <div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown">
+        <button class="btn btn-sm btn-outline-primary" id="dropdownManual" ngbDropdownAnchor (focus)="myDrop.open()">Actions</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownManual">
+          <button ngbDropdownItem (click)="saveAppointment(appointment)">Done</button>
+          <button ngbDropdownItem (click)="acceptAppointment(appointment)">Accept</button>
+          <button ngbDropdownItem (click)="cancelAppointment(appointment)">Cancel</button>
+          <div *ngIf="appointment.done"><button ngbDropdownItem (click)="showReview(appointment)">Show review</button>
+          <button ngbDropdownItem (click)="writeReview(appointment)">Write review</button></div>
+        </div>
+      </div>
+<!--      <button type="button" class="btn btn-sm btn-group-sm btn-secondary" (click)="saveAppointment(appointment)">Accept</button>-->
+<!--      <button type="button" class="btn btn-sm btn-group-sm btn-success" (click)="saveAppointment(appointment)">Done</button>-->
+<!--      <button type="button" class="btn btn-sm btn-group-sm btn-warning" (click)="saveAppointment(appointment)">Cancel</button>-->
+    </td>
+
+  </tr>
+  </tbody>
+</table>

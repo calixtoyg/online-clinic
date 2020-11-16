@@ -11,22 +11,7 @@ import {Profile} from '../enum/profile.enum';
 })
 export class UsersService {
 
-  constructor(private store: AngularFirestore, private authentication: AuthenticationService) {
-  }
-
-  createUser(email: string, password: string, userToCreate: UserCreation): Promise<any> {
-    return this.authentication.createUser(email, password, userToCreate);
-    // return this.authentication.signUp(email, password)
-    //   .then(() => this.store.collection('users').doc(email).set(
-    //     {
-    //       name: userToCreate.name,
-    //       lastname: userToCreate.lastname,
-    //       profile: userToCreate.lastname,
-    //       specializations: userToCreate.specializations
-    //     }
-    //   ).then(() => Promise.all([this.angularFireStorage.ref(email + '_1.jpg').put(userToCreate.firstImage),
-    //     this.angularFireStorage.ref(email + '_2.jpg').put(userToCreate.secondImage)])
-    //   )).catch(console.error);
+  constructor(private store: AngularFirestore) {
   }
 
   getUserWithProfile(profile: Profile): Observable<UserCreation[]> {
@@ -38,6 +23,17 @@ export class UsersService {
       }))
     ).pipe(map(arrayOfUsers => {
         return arrayOfUsers.filter(user => user.profile.toLowerCase() === profile);
+      })
+    );
+  }
+
+  getUserByMail(email: string): Observable<UserCreation> {
+    return this.store.doc<UserCreation>('users/' + email).snapshotChanges().pipe(
+      map(user => {
+        console.log(user);
+        const data = user.payload.data() as UserCreation;
+        data.email = user.payload.id;
+        return data;
       })
     );
   }

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {CreateUserModalComponent} from '../create-user-modal/create-user-modal.component';
-import {Speciality} from '../../enum/speciality.enum';
 import {Profile} from '../../enum/profile.enum';
+import {ShowReviewModalComponent} from '../show-review-modal/show-review-modal.component';
 
 @Component({
   selector: 'app-welcome',
@@ -11,14 +11,15 @@ import {Profile} from '../../enum/profile.enum';
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal) {
+  }
 
   ngOnInit(): void {
   }
 
   open() {
     const modalRef = this.modalService.open(CreateUserModalComponent);
-    modalRef.componentInstance.options =  Object.keys(Profile)
+    modalRef.componentInstance.options = Object.keys(Profile)
       .map(value => Profile[value][0].toUpperCase() + Profile[value].slice(1, Profile[value].length));
     modalRef.componentInstance.name = 'some name';
   }

@@ -1,0 +1,6 @@
+.cdk-overlay-container {
+  z-index: 9999 !important;
+}
+.cdk-global-overlay-wrapper {
+  z-index: 1000;
+}

@@ -1,0 +1,24 @@
+<div class="modal-header">
+  <h4 class="modal-title" i18n="Modal Header | title">Create User </h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="reviewForm">
+
+    <div class="form-group">
+      <label for="score" i18n="score">Score:</label>
+      <input type="number" min="1" max="5" id="score" formControlName="score" class="form-control" placeholder="Score (1 to 5)" i18n="form score placeholder">
+    </div>
+    <div class="form-group">
+      <label for="content" i18n="form contet">Content:</label>
+      <textarea class="form-control" id="content" rows="3"></textarea>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" [disabled]="!this.reviewForm.valid" (click)="submit()">Submit</button>
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+</div>
+

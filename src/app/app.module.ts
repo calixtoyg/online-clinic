@@ -33,6 +33,17 @@ import {MatIconModule} from '@angular/material/icon';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { PossibleDatesComponent } from './components/possible-dates/possible-dates.component';
+import { RolePipe } from './pipes/role.pipe';
+import { RedirectLoginComponent } from './components/redirect-login/redirect-login.component';
+import { WelcomePatientComponent } from './components/welcome-patient/welcome-patient.component';
+import { WelcomeAdminComponent } from './components/welcome-admin/welcome-admin.component';
+import { WelcomeProfessionalComponent } from './components/welcome-professional/welcome-professional.component';
+import { TodayAppointmentsComponent } from './components/today-appointments/today-appointments.component';
+import { HourPipe } from './pipes/hour.pipe';
+import { ShowImageDirective } from './directives/show-image.directive';
+import {MatTooltip, MatTooltipModule} from '@angular/material/tooltip';
+import { ShowReviewModalComponent } from './components/show-review-modal/show-review-modal.component';
+import { WriteReviewModalComponent } from './components/write-review-modal/write-review-modal.component';
 
 
 @NgModule({
@@ -50,6 +61,16 @@ import { PossibleDatesComponent } from './components/possible-dates/possible-dat
     PatientsComponent,
     SpinnerComponent,
     PossibleDatesComponent,
+    RolePipe,
+    RedirectLoginComponent,
+    WelcomePatientComponent,
+    WelcomeAdminComponent,
+    WelcomeProfessionalComponent,
+    TodayAppointmentsComponent,
+    HourPipe,
+    ShowImageDirective,
+    ShowReviewModalComponent,
+    WriteReviewModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,6 +92,7 @@ import { PossibleDatesComponent } from './components/possible-dates/possible-dat
     MatChipsModule,
     MatNativeDateModule,
     MatProgressSpinnerModule,
+    MatTooltipModule,
     MatIconModule
   ],
   providers: [MatNativeDateModule,

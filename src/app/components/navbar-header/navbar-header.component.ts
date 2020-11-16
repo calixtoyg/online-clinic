@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {LoginComponent} from '../login/login.component';
 import {AuthenticationService} from '../../services/authentication.service';
+import {Menu} from '../../model/menu';
 
 @Component({
   selector: 'app-navbar-header',
@@ -11,6 +12,7 @@ import {AuthenticationService} from '../../services/authentication.service';
 export class NavbarHeaderComponent implements OnInit {
   private modalRef: NgbModalRef;
   loggedIn = false;
+  menus: Menu[];
 
   constructor(private modalService: NgbModal, public authentication: AuthenticationService) { }
 
@@ -30,5 +32,9 @@ export class NavbarHeaderComponent implements OnInit {
   logout() {
     this.authentication.logout();
     this.loggedIn = false;
+  }
+
+  getRole(): string {
+    return localStorage.getItem('role');
   }
 }

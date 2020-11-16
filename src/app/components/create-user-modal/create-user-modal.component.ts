@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../services/authentication.service';
@@ -10,7 +10,7 @@ import {MatAutocomplete, MatAutocompleteSelectedEvent} from '@angular/material/a
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {map, startWith} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-create-user-modal',
@@ -18,7 +18,8 @@ import {Observable} from 'rxjs';
   styleUrls: ['./create-user-modal.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class CreateUserModalComponent implements OnInit {
+export class CreateUserModalComponent implements OnInit, OnDestroy {
+  subs: Subscription[] = [];
   @Input() name;
   @Input() public options: any;
   profile: string;
@@ -67,7 +68,7 @@ export class CreateUserModalComponent implements OnInit {
     this.firstImage = {};
     this.secondImage = {};
 
-    this.userForm.controls.profile.valueChanges.subscribe(value => {
+    this.subs.push(this.userForm.controls.profile.valueChanges.subscribe(value => {
       if (value.toLowerCase() === 'patient') {
         this.userForm.addControl('firstImage', new FormControl('', [Validators.required]));
         this.userForm.addControl('secondImage', new FormControl('', [Validators.required]));
@@ -79,7 +80,7 @@ export class CreateUserModalComponent implements OnInit {
         this.userForm.removeControl('secondImage');
         this.userForm.removeControl('specializations');
       }
-    });
+    }));
     this.specializations = Object.keys(Speciality)
       .map(value => Speciality[value][0].toUpperCase() + Speciality[value].slice(1, Speciality[value].length));
 
@@ -105,15 +106,15 @@ export class CreateUserModalComponent implements OnInit {
   submitAfterCaptcha() {
     console.log(this.userForm.valid);
     console.log(this.userForm.value.specializations);
-    // if (this.userForm.valid) {
-    //   this.authentication.createUser(this.userForm.value.email, this.userForm.value.password, {
-    //     ...this.userForm.value,
-    //     firstImage: this.firstImage,
-    //     secondImage: this.secondImage
-    //   }).finally(
-    //     this.activeModal.close
-    //   );
-    // }
+    if (this.userForm.valid) {
+      this.authentication.createUser(this.userForm.value.email, this.userForm.value.password, {
+        ...this.userForm.value,
+        firstImage: this.firstImage,
+        secondImage: this.secondImage
+      }).finally(
+        this.activeModal.close
+      );
+    }
   }
 
   onFileChange(event: Event, id: string) {
@@ -192,5 +193,9 @@ export class CreateUserModalComponent implements OnInit {
     console.log(specialization);
     const filterValue = specialization.toLowerCase();
     return this.specializations.filter(spec => spec.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach(sub => sub.unsubscribe());
   }
 }
