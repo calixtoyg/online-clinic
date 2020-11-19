@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {CreateUserModalComponent} from '../create-user-modal/create-user-modal.component';
 import {Profile} from '../../enum/profile.enum';
-import {ShowReviewModalComponent} from '../show-review-modal/show-review-modal.component';
 
 @Component({
   selector: 'app-welcome',

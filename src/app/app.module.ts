@@ -44,6 +44,11 @@ import { ShowImageDirective } from './directives/show-image.directive';
 import {MatTooltip, MatTooltipModule} from '@angular/material/tooltip';
 import { ShowReviewModalComponent } from './components/show-review-modal/show-review-modal.component';
 import { WriteReviewModalComponent } from './components/write-review-modal/write-review-modal.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { PatientAppointmentsComponent } from './components/patient-appointments/patient-appointments.component';
+import { ShowCommentAndAnswersComponent } from './components/show-comment-and-answers/show-comment-and-answers.component';
+import { WriteCommentsModalComponent } from './components/write-comments-modal/write-comments-modal.component';
+import { TodayAppointmentsPatientsComponent } from './components/today-appointments-patients/today-appointments-patients.component';
 
 
 @NgModule({
@@ -71,6 +76,11 @@ import { WriteReviewModalComponent } from './components/write-review-modal/write
     ShowImageDirective,
     ShowReviewModalComponent,
     WriteReviewModalComponent,
+    ForgotPasswordComponent,
+    PatientAppointmentsComponent,
+    ShowCommentAndAnswersComponent,
+    WriteCommentsModalComponent,
+    TodayAppointmentsPatientsComponent,
   ],
   imports: [
     BrowserModule,

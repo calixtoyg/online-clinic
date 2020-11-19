@@ -3,9 +3,10 @@
     <p class="h6 mt-2">{{groupOfDates.day | date:'mediumDate'}}:</p>
     <div class="row align-items-center">
       <div class="col-sm-6 col-md-4" *ngFor="let date of groupOfDates.dates">
-        <button type="button" class="btn btn-sm btn-outline-primary" (click)="emitDate(date)" >{{date | date:'shortTime'}}</button>
+        <button type="button" class="btn btn-sm btn-outline-primary" (click)="emitDate(date)">{{date | date:'shortTime'}}</button>
       </div>
     </div>
   </div>
+
 </div>
 

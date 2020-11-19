@@ -1,11 +1,11 @@
-import {Review} from './review';
-
 export interface Appointment {
-  email: string;
+    email: string;
   hour: string;
   comment?: string;
-  review?: Review;
-  acceptedByPatient?: boolean;
-  acceptedByProfessional?: boolean;
+  questions?: string[];
+  answers?: string[];
+  review?: string;
+  acceptedByPatient?: string | boolean;
+  acceptedByProfessional?: string | boolean;
   done?: boolean;
 }

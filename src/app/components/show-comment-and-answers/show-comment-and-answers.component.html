@@ -1,14 +1,18 @@
+
 <div class="modal-header">
-  <h4 class="modal-title" i18n="Modal Header | title review">{{'Review from '+ email}}  </h4>
+  <h4 class="modal-title" i18n="Modal Header | title review">{{'Comment from '+ email}}  </h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <div class="modal-body">
-    <p>{{review}}</p>
+  <div *ngFor="let question of questions,index as i">
+    <p class="h3" >{{question}}</p>
+    <br>
+    <p>{{answers[i]}}</p>
+  </div>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
 </div>
-
 

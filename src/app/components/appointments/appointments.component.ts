@@ -115,10 +115,10 @@ export class AppointmentsComponent implements OnInit {
     this.stepper.next();
   }
 
-  setDate($event: MatDatepickerInputEvent<Date, unknown>, stepper: MatVerticalStepper): void {
+  setDate($event: MatDatepickerInputEvent<Date, unknown>): void {
     this.dateForm.setValue({appointmentDate: $event.value});
     this.setFilteredHours($event);
-    stepper.next();
+    this.stepper.next();
   }
 
   setDateForPossibleDates($event): void {

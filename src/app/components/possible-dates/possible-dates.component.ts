@@ -2,16 +2,18 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {CalendarService} from '../../services/calendar.service';
 import {PartOfDay} from '../../enum/part-of-day.enum';
 import {Subscription} from 'rxjs';
+import {DatePipe} from '@angular/common';
 
 
 @Component({
   selector: 'app-possible-dates',
   templateUrl: './possible-dates.component.html',
-  styleUrls: ['./possible-dates.component.css']
+  styleUrls: ['./possible-dates.component.css'],
+  providers: [DatePipe]
 })
 export class PossibleDatesComponent implements OnInit, OnChanges {
 
-  constructor(private calendarService: CalendarService) {
+  constructor(private calendarService: CalendarService, private datePipe: DatePipe) {
   }
 
   hours = ['08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30'];
@@ -23,9 +25,9 @@ export class PossibleDatesComponent implements OnInit, OnChanges {
   @Input() partOfDay: PartOfDay;
   @Input() year: number;
   @Output() selectedDate = new EventEmitter<Date>();
-  morningDates = new Array<Date>(new Date(2020, 11, 16, 9, 0), new Date(2020, 11, 16, 8, 30), new Date(2020, 11, 17, 10, 30));
-  afternoonDates = new Array<Date>(new Date(2020, 11, 18, 16, 0), new Date(2020, 11, 16, 15, 30), new Date(2020, 11, 17, 17, 30));
   dates: any;
+  private today = new Date();
+  emptyArrays: boolean;
 
   private static getNextAvailableDay(today: Date): Date {
     const date = new Date(today);
@@ -40,6 +42,7 @@ export class PossibleDatesComponent implements OnInit, OnChanges {
     if (!!this.professionalEmail) {
       this.showPossibleDates();
     }
+    this.hours = this.partOfDay === PartOfDay.MORNING ? this.hours.slice(0, 9) : this.hours.slice(9, this.hours.length);
   }
 
 
@@ -65,7 +68,7 @@ export class PossibleDatesComponent implements OnInit, OnChanges {
 
         // this.dates = this.getPossibleDates(dayWithAppointments);
         this.dates = this.getPossibleDates(dayWithAppointments);
-        console.log(this.dates);
+        // this.emptyArrays = possibleDates.flat().length > 0;
         // console.log(arr);
 
         // return dayWithAppointments.map(value => new Date(value.year, value.month, value.day, ))
@@ -74,14 +77,14 @@ export class PossibleDatesComponent implements OnInit, OnChanges {
   }
 
   private getToday(): Date {
-    const today = new Date();
-    if (today.getDay() === 6) {
-      return new Date(new Date().setDate(today.getDate() + 2));
+
+    if (this.today.getDay() === 6) {
+      return new Date(new Date().setDate(this.today.getDate() + 2));
     }
-    if (today.getDay() === 0) {
-      return new Date(new Date().setDate(today.getDate() + 1));
+    if (this.today.getDay() === 0) {
+      return new Date(new Date().setDate(this.today.getDate() + 1));
     }
-    return today;
+    return this.today;
 
   }
 
@@ -95,8 +98,11 @@ export class PossibleDatesComponent implements OnInit, OnChanges {
   }[][], 1>[]): Date[] {
     const possibleDatesArray = [];
     let today = this.getToday();
-    const hoursSlice = this.partOfDay === PartOfDay.MORNING ? this.hours.slice(0, 9) : this.hours.slice(9, this.hours.length);
+
+
     for (let i = 0; i < this.days; i++) {
+      // const hoursSlice = this.partOfDay === PartOfDay.MORNING ? this.hours.slice(0, 9) : this.hours.slice(9, this.hours.length);
+      const hoursSlice = this.getHoursFromNow(today);
       const possibleDates = [];
       const appointmentsForTheDay = dayWithAppointments
         .filter(eachDayWithAppointments => eachDayWithAppointments.day === today.getDate());
@@ -125,8 +131,29 @@ export class PossibleDatesComponent implements OnInit, OnChanges {
     return possibleDatesArray;
   }
 
+
   ngOnChanges(changes: SimpleChanges): void {
     this.showPossibleDates(); // here you will get the data from parent once the input param is change
+  }
+
+  private getHoursFromNow(compareAgainst: Date): string[] {
+    const hoursDateAndPartOfTheDay = this.hours.map(value => {
+      const hoursAndMinutes = value.split(':');
+      return new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate(), Number(hoursAndMinutes[0]), Number(hoursAndMinutes[1]));
+    });
+    const hoursIndex = hoursDateAndPartOfTheDay.findIndex(value => {
+      return value > compareAgainst;
+    });
+    if (hoursIndex === -1 && this.compareDates(this.today, compareAgainst)) {
+      return [];
+    } else if (hoursIndex === -1) {
+      return this.hours;
+    }
+    return this.hours.slice(hoursIndex, this.hours.length);
+  }
+
+  private compareDates(today: Date, compareAgainst: Date): boolean {
+    return today.getFullYear() === compareAgainst.getFullYear() && today.getMonth() === compareAgainst.getMonth() && today.getDate() === compareAgainst.getDate();
   }
 }
 

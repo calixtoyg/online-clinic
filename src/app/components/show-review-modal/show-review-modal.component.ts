@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Review} from '../../model/review';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -9,11 +8,12 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 })
 export class ShowReviewModalComponent implements OnInit {
   @Input() email: string;
-  @Input() review: Review;
+  @Input() review: string;
 
   constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
+
   }
 
 }

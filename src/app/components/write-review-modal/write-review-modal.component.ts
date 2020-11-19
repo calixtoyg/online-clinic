@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {Appointment} from '../../model/appointment';
 
 @Component({
   selector: 'app-write-review-modal',
@@ -10,14 +11,14 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 export class WriteReviewModalComponent implements OnInit {
   reviewForm: FormGroup;
   disableSubmit: boolean;
+  @Input() calendarId: string;
+  @Input() appointment: Appointment;
 
   constructor(private fb: FormBuilder, public activeModal: NgbActiveModal) { }
 
   ngOnInit(): void {
     this.reviewForm = this.fb.group({
-      content: ['', Validators.required],
-      score: ['', Validators.required],
-
+      content: ['', Validators.required]
     });
   }
 

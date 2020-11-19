@@ -1,9 +1,9 @@
 <table class="table table-striped">
-  <thead>
-  <tr class="text-center">
+  <thead class="text-center">
+  <tr>
     <th scope="col">#</th>
-    <th scope="col">Email</th>
     <th scope="col">Time</th>
+    <th scope="col">Date</th>
     <th scope="col">Medic Accepted</th>
     <th scope="col">Patient Accepted</th>
     <th scope="col">Done</th>
@@ -12,12 +12,12 @@
   </thead>
   <tbody>
   <tr class="text-center" *ngFor="let appointment of appointments | async | hour:'asc'; index as i">
-    <td >{{ i + 1 }}</td>
+    <td>{{ i + 1 }}</td>
     <td>
-      {{ appointment.email}}
+      {{ appointment.appointment.hour}}
     </td>
     <td>
-      {{ appointment.hour}}
+      {{appointment.date | date:'shortDate'}}
     </td>
     <td>
       <!--      [ngClass]="appointment.done ? 'green-icon' : ''"-->
@@ -41,18 +41,19 @@
       <div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown">
         <button class="btn btn-sm btn-outline-primary" id="dropdownManual" ngbDropdownAnchor (focus)="myDrop.open()">Actions</button>
         <div ngbDropdownMenu aria-labelledby="dropdownManual">
-          <button ngbDropdownItem (click)="saveAppointment(appointment)">Mark as Done</button>
+          <button ngbDropdownItem (click)="saveAppointment(appointment)">{{appointment.appointment.done ? 'Cancel done' : 'Done'}}</button>
           <button ngbDropdownItem (click)="acceptAppointment(appointment)">Accept</button>
           <button ngbDropdownItem (click)="cancelAppointment(appointment)">Cancel</button>
-<!--          <div *ngIf="appointment.done && patient"><button ngbDropdownItem (click)="showReview(appointment)">Show review</button>-->
-<!--          <button ngbDropdownItem (click)="writeReview()">Write review</button></div>-->
-          <div *ngIf="appointment.done"><button ngbDropdownItem (click)="showComment(appointment)">Show comment</button>
-          <button ngbDropdownItem (click)="writeComment(appointment)">Write comment</button></div>
+          <div *ngIf="appointment.appointment.done">
+            <button ngbDropdownItem (click)="showReview(appointment)">Show review</button>
+            <button ngbDropdownItem (click)="writeComment(appointment)">Write review</button>
+          </div>
+
         </div>
       </div>
-<!--      <button type="button" class="btn btn-sm btn-group-sm btn-secondary" (click)="saveAppointment(appointment)">Accept</button>-->
-<!--      <button type="button" class="btn btn-sm btn-group-sm btn-success" (click)="saveAppointment(appointment)">Done</button>-->
-<!--      <button type="button" class="btn btn-sm btn-group-sm btn-warning" (click)="saveAppointment(appointment)">Cancel</button>-->
+      <!--      <button type="button" class="btn btn-sm btn-group-sm btn-secondary" (click)="saveAppointment(appointment)">Accept</button>-->
+      <!--      <button type="button" class="btn btn-sm btn-group-sm btn-success" (click)="saveAppointment(appointment)">Done</button>-->
+      <!--      <button type="button" class="btn btn-sm btn-group-sm btn-warning" (click)="saveAppointment(appointment)">Cancel</button>-->
     </td>
 
   </tr>

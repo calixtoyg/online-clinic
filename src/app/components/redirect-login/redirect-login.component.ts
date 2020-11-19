@@ -1,11 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../services/authentication.service';
 import {Router} from '@angular/router';
 import {UsersService} from '../../services/users.service';
 import {Role} from '../../enum/role.enum';
-import {Subscription} from 'rxjs';
-import {CalendarService} from '../../services/calendar.service';
+import {Subject, Subscription} from 'rxjs';
+import {NgbAlert, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ForgotPasswordComponent} from '../forgot-password/forgot-password.component';
 
 @Component({
   selector: 'app-redirect-login',
@@ -15,11 +16,19 @@ import {CalendarService} from '../../services/calendar.service';
 export class RedirectLoginComponent implements OnInit, OnDestroy {
   subs: Subscription[] = [];
   loginForm: FormGroup;
+  alertMessage: string;
+  alertType: string;
+  @ViewChild('alert',  {static: false}) alert: NgbAlert;
+  private alertSubscription = new Subject<any>();
 
-  constructor(private fb: FormBuilder, public authentication: AuthenticationService, private router: Router, private usersService: UsersService) {
+  constructor(private fb: FormBuilder, public authentication: AuthenticationService, private router: Router, private usersService: UsersService, private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
+    this.alertSubscription.subscribe(({message, successful}) => {
+      this.alertMessage = message;
+      this.alertType =  successful ? 'success' : 'danger';
+    });
     this.loginForm = this.fb.group({
       email: ['', Validators.email],
       password: ['', Validators.required]
@@ -53,6 +62,15 @@ export class RedirectLoginComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subs.forEach(s => s.unsubscribe());
+  }
+
+  forgotPassword() {
+    const modalRef = this.modalService.open(ForgotPasswordComponent);
+    modalRef.componentInstance.email = this.loginForm.value.email || '';
+    modalRef.result.then(value => {
+      this.alertSubscription.next(value);
+
+    });
   }
 
 }

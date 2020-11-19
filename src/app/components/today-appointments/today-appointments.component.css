@@ -1,8 +1,19 @@
 .green-icon {
   color: seagreen;
 }
+.cancelled {
+  color: darkred;
+}
+.black {
+  color: black;
+}
 .table > tbody > tr > td {
   vertical-align: middle;
+  text-align: center;
+}
+.table > tbody > tr {
+  vertical-align: middle;
+  /*text-align: center;*/
 }
 /*.btn-group {*/
 /*  display: flex;*/

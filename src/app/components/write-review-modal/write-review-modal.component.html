@@ -9,7 +9,14 @@
 
     <div class="form-group">
       <label for="score" i18n="score">Score:</label>
-      <input type="number" min="1" max="5" id="score" formControlName="score" class="form-control" placeholder="Score (1 to 5)" i18n="form score placeholder">
+      <label for="score" i18n="form score placeholder">Score (1 to 5)</label>
+      <select class="form-control" id="score">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
     </div>
     <div class="form-group">
       <label for="content" i18n="form contet">Content:</label>
