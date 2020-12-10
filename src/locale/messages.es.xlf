@@ -4,7 +4,6 @@
     <body>
       <trans-unit id="ngb.alert.close" datatype="html">
         <source>Close</source>
-        <target>Cerrar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/alert/alert.d.ts</context>
           <context context-type="linenumber">3</context>
@@ -12,7 +11,6 @@
       </trans-unit>
       <trans-unit id="ngb.carousel.previous" datatype="html">
         <source>Previous</source>
-        <target>Previo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/carousel/carousel.d.ts</context>
           <context context-type="linenumber">13</context>
@@ -20,7 +18,6 @@
       </trans-unit>
       <trans-unit id="ngb.carousel.next" datatype="html">
         <source>Next</source>
-        <target>Siguiente</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/carousel/carousel.d.ts</context>
           <context context-type="linenumber">17</context>
@@ -28,7 +25,6 @@
       </trans-unit>
       <trans-unit id="ngb.datepicker.previous-month" datatype="html">
         <source>Previous month</source>
-        <target>Mes previo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/datepicker/datepicker-navigation.d.ts</context>
           <context context-type="linenumber">4</context>
@@ -40,7 +36,6 @@
       </trans-unit>
       <trans-unit id="ngb.datepicker.next-month" datatype="html">
         <source>Next month</source>
-        <target>Proximo mes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/datepicker/datepicker-navigation.d.ts</context>
           <context context-type="linenumber">26</context>
@@ -52,7 +47,6 @@
       </trans-unit>
       <trans-unit id="ngb.datepicker.select-month" datatype="html">
         <source>Select month</source>
-        <target>Seleccionar mes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/datepicker/datepicker-navigation-select.d.ts</context>
           <context context-type="linenumber">5</context>
@@ -64,7 +58,6 @@
       </trans-unit>
       <trans-unit id="ngb.datepicker.select-year" datatype="html">
         <source>Select year</source>
-        <target>Seleccionar año</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/datepicker/datepicker-navigation-select.d.ts</context>
           <context context-type="linenumber">13</context>
@@ -76,7 +69,6 @@
       </trans-unit>
       <trans-unit id="ngb.pagination.first" datatype="html">
         <source>««</source>
-        <target>««</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/pagination/pagination.d.ts</context>
           <context context-type="linenumber">2</context>
@@ -84,7 +76,6 @@
       </trans-unit>
       <trans-unit id="ngb.pagination.previous" datatype="html">
         <source>«</source>
-        <target>«</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/pagination/pagination.d.ts</context>
           <context context-type="linenumber">3</context>
@@ -92,7 +83,6 @@
       </trans-unit>
       <trans-unit id="ngb.pagination.next" datatype="html">
         <source>»</source>
-        <target>»</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/pagination/pagination.d.ts</context>
           <context context-type="linenumber">4</context>
@@ -100,7 +90,6 @@
       </trans-unit>
       <trans-unit id="ngb.pagination.last" datatype="html">
         <source>»»</source>
-        <target>»»</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/pagination/pagination.d.ts</context>
           <context context-type="linenumber">5</context>
@@ -108,7 +97,6 @@
       </trans-unit>
       <trans-unit id="ngb.pagination.first-aria" datatype="html">
         <source>First</source>
-        <target>Primero</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/pagination/pagination.d.ts</context>
           <context context-type="linenumber">14</context>
@@ -116,7 +104,6 @@
       </trans-unit>
       <trans-unit id="ngb.pagination.previous-aria" datatype="html">
         <source>Previous</source>
-        <target>Previo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/pagination/pagination.d.ts</context>
           <context context-type="linenumber">24</context>
@@ -124,7 +111,6 @@
       </trans-unit>
       <trans-unit id="ngb.pagination.next-aria" datatype="html">
         <source>Next</source>
-        <target>Siguiente</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/pagination/pagination.d.ts</context>
           <context context-type="linenumber">44</context>
@@ -132,7 +118,6 @@
       </trans-unit>
       <trans-unit id="ngb.pagination.last-aria" datatype="html">
         <source>Last</source>
-        <target>Último</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/pagination/pagination.d.ts</context>
           <context context-type="linenumber">53</context>
@@ -140,7 +125,6 @@
       </trans-unit>
       <trans-unit id="ngb.progressbar.value" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{getValue() / max | percent}}"/></source>
-        <target><x id="INTERPOLATION" equiv-text="{{getValue() / max | percent}}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/progressbar/progressbar.d.ts</context>
           <context context-type="linenumber">7</context>
@@ -148,7 +132,6 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.increment-hours" datatype="html">
         <source>Increment hours</source>
-        <target>Incrementar horas</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
           <context context-type="linenumber">9</context>
@@ -156,7 +139,6 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.HH" datatype="html">
         <source>HH</source>
-        <target>HH</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
           <context context-type="linenumber">13</context>
@@ -164,7 +146,6 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.hours" datatype="html">
         <source>Hours</source>
-        <target>Horas</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
           <context context-type="linenumber">15</context>
@@ -172,7 +153,6 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.decrement-hours" datatype="html">
         <source>Decrement hours</source>
-        <target>Decrementar horas</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
           <context context-type="linenumber">23</context>
@@ -180,7 +160,6 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.increment-minutes" datatype="html">
         <source>Increment minutes</source>
-        <target>Incrementar minutos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
           <context context-type="linenumber">32</context>
@@ -188,7 +167,6 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.MM" datatype="html">
         <source>MM</source>
-        <target>MM</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
           <context context-type="linenumber">35</context>
@@ -196,7 +174,6 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.minutes" datatype="html">
         <source>Minutes</source>
-        <target>Minutos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
           <context context-type="linenumber">37</context>
@@ -204,7 +181,6 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.decrement-minutes" datatype="html">
         <source>Decrement minutes</source>
-        <target>Decrementar minutos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
           <context context-type="linenumber">45</context>
@@ -212,7 +188,6 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.increment-seconds" datatype="html">
         <source>Increment seconds</source>
-        <target>Incrementar segundos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
           <context context-type="linenumber">54</context>
@@ -220,7 +195,6 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.SS" datatype="html">
         <source>SS</source>
-        <target>SS</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
           <context context-type="linenumber">57</context>
@@ -228,7 +202,6 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.seconds" datatype="html">
         <source>Seconds</source>
-        <target>Segundos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
           <context context-type="linenumber">59</context>
@@ -236,7 +209,6 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.decrement-seconds" datatype="html">
         <source>Decrement seconds</source>
-        <target>Decrementar segundos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
           <context context-type="linenumber">67</context>
@@ -244,7 +216,6 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.PM" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{ i18n.getAfternoonPeriod() }}"/></source>
-        <target><x id="INTERPOLATION" equiv-text="{{ i18n.getAfternoonPeriod() }}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
           <context context-type="linenumber">76</context>
@@ -252,7 +223,6 @@
       </trans-unit>
       <trans-unit id="ngb.timepicker.AM" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{ i18n.getMorningPeriod() }}"/></source>
-        <target><x id="INTERPOLATION" equiv-text="{{ i18n.getMorningPeriod() }}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/timepicker/timepicker.d.ts</context>
           <context context-type="linenumber">77</context>
@@ -260,7 +230,6 @@
       </trans-unit>
       <trans-unit id="ngb.toast.close-aria" datatype="html">
         <source>Close</source>
-        <target>Cerrar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/@ng-bootstrap/ng-bootstrap/toast/toast.d.ts</context>
           <context context-type="linenumber">8</context>
@@ -268,7 +237,6 @@
       </trans-unit>
       <trans-unit id="9f9fcf50da58614b8516afea514e75dee005742a" datatype="html">
         <source>Create User </source>
-        <target>Crear Usuario</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/create-user-modal/create-user-modal.component.html</context>
           <context context-type="linenumber">2</context>
@@ -278,7 +246,6 @@
       </trans-unit>
       <trans-unit id="616e206cb4f25bd5885fc35925365e43cf5fb929" datatype="html">
         <source>Name:</source>
-        <target>Nombre:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/create-user-modal/create-user-modal.component.html</context>
           <context context-type="linenumber">10</context>
@@ -287,7 +254,6 @@
       </trans-unit>
       <trans-unit id="319089e5d0ad256f6dc7cd816c585b4ed790e5aa" datatype="html">
         <source>Lastname:</source>
-        <target>Apellido:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/create-user-modal/create-user-modal.component.html</context>
           <context context-type="linenumber">14</context>
@@ -296,7 +262,6 @@
       </trans-unit>
       <trans-unit id="91b96d7228b6e05c238fa4e39abfc17ad51a6eef" datatype="html">
         <source>Email:</source>
-        <target>Email:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/create-user-modal/create-user-modal.component.html</context>
           <context context-type="linenumber">18</context>
@@ -317,7 +282,6 @@
       </trans-unit>
       <trans-unit id="4434eb250f44b5effd90253c0c9f2bf1e69ec13f" datatype="html">
         <source>Password:</source>
-        <target>Contraseña:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/create-user-modal/create-user-modal.component.html</context>
           <context context-type="linenumber">22</context>
@@ -334,7 +298,6 @@
       </trans-unit>
       <trans-unit id="aa2bd6c81699baa7e53c9bfe3925531416b05c00" datatype="html">
         <source>Login</source>
-        <target>Login</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/login/login.component.html</context>
           <context context-type="linenumber">2</context>
@@ -344,7 +307,6 @@
       </trans-unit>
       <trans-unit id="a8146c64cd8d47998584f82e3860187655516ea0" datatype="html">
         <source>Name</source>
-        <target>Nombre</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/users/users.component.html</context>
           <context context-type="linenumber">4</context>
@@ -354,7 +316,6 @@
       </trans-unit>
       <trans-unit id="96fa3ea80f12b57fc13c4eb281eaa33c119af211" datatype="html">
         <source>Last name</source>
-        <target>Apellido</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/users/users.component.html</context>
           <context context-type="linenumber">5</context>
@@ -364,7 +325,6 @@
       </trans-unit>
       <trans-unit id="3dbb79b0f9716d17db7ee9963cd77b5785479b32" datatype="html">
         <source>Profile</source>
-        <target>Perfil</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/users/users.component.html</context>
           <context context-type="linenumber">6</context>
@@ -374,7 +334,6 @@
       </trans-unit>
       <trans-unit id="f57eb2dec96452f2b507058c8df79d9f9a55505d" datatype="html">
         <source>Specialization</source>
-        <target>Especialización</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/users/users.component.html</context>
           <context context-type="linenumber">7</context>
@@ -384,7 +343,6 @@
       </trans-unit>
       <trans-unit id="72ea74281bc3735248dd2fafb0ef634c53c290e2" datatype="html">
         <source>Picture #1</source>
-        <target>Foto #1</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/users/users.component.html</context>
           <context context-type="linenumber">8</context>
@@ -394,7 +352,6 @@
       </trans-unit>
       <trans-unit id="445e2c0d81cb1330969942d0ef2e7d7149bda130" datatype="html">
         <source>Picture #2</source>
-        <target>Foto #2</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/users/users.component.html</context>
           <context context-type="linenumber">9</context>
@@ -404,7 +361,6 @@
       </trans-unit>
       <trans-unit id="27b28b4c3f1db9df8fddb839c66cd5f52b5a1bf5" datatype="html">
         <source>Actions</source>
-        <target>Acciones</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/users/users.component.html</context>
           <context context-type="linenumber">10</context>
@@ -414,7 +370,6 @@
       </trans-unit>
       <trans-unit id="962d4b07ee5ab8b9c310755bf8fc55ab1e27daf4" datatype="html">
         <source>Forgot password</source>
-        <target>Olvido contraseña</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/forgot-password/forgot-password.component.html</context>
           <context context-type="linenumber">2</context>
@@ -424,7 +379,6 @@
       </trans-unit>
       <trans-unit id="b50abaf401b72045d37ec52c81c9c54def934cb1" datatype="html">
         <source>Appointments for the day</source>
-        <target>Turnos de hoy</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/welcome-professional/welcome-professional.component.html</context>
           <context context-type="linenumber">3</context>
@@ -434,7 +388,6 @@
       </trans-unit>
       <trans-unit id="8ebba453f086b989583dbbddf695448cd9fb0bf0" datatype="html">
         <source>Patients</source>
-        <target>Pacientes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/welcome-professional/welcome-professional.component.html</context>
           <context context-type="linenumber">7</context>
@@ -444,7 +397,6 @@
       </trans-unit>
       <trans-unit id="914638592fb6da0733c7f101418fa86ebd25b736" datatype="html">
         <source>Appointments</source>
-        <target>Turnos</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/welcome-professional/welcome-professional.component.html</context>
           <context context-type="linenumber">15</context>
@@ -454,7 +406,6 @@
       </trans-unit>
       <trans-unit id="41453c3d7e0a1ac2e5c9e73d3f8f5bf9ec23b829" datatype="html">
         <source>Export CSV</source>
-        <target>Exportar CSV</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/welcome-professional/welcome-professional.component.html</context>
           <context context-type="linenumber">18</context>
@@ -463,7 +414,6 @@
       </trans-unit>
       <trans-unit id="17e5a0c63bf64b14ac31249d78a7e8ac9d6a9526" datatype="html">
         <source>Search by properties</source>
-        <target>Buscar por campo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/welcome-professional/welcome-professional.component.html</context>
           <context context-type="linenumber">25</context>
@@ -472,43 +422,68 @@
       </trans-unit>
       <trans-unit id="f385d8c7f967fde4b8d1822ef049397255730ae9" datatype="html">
         <source>Search by email</source>
-        <target>Buscar por email</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/welcome-professional/welcome-professional.component.html</context>
           <context context-type="linenumber">28</context>
         </context-group>
         <note priority="1" from="description">Search by email</note>
       </trans-unit>
-      <trans-unit id="7823909fb1d8d313382f6f4bd842f1a7ef6f08d1" datatype="html">
+      <trans-unit id="acceptedByMedic" datatype="html">
+        <source>Accepted By Medic: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/welcome-professional/welcome-professional.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="accepted" datatype="html">
         <source>Accepted</source>
-        <target>Acceptado</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/welcome-professional/welcome-professional.component.html</context>
           <context context-type="linenumber">34</context>
         </context-group>
-        <note priority="1" from="description">accepted</note>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/welcome-professional/welcome-professional.component.html</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
       </trans-unit>
-      <trans-unit id="2310400448b90e879fb988300d6839eb9316edf8" datatype="html">
+      <trans-unit id="declined" datatype="html">
         <source>Declined</source>
-        <target>Declinado</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/welcome-professional/welcome-professional.component.html</context>
           <context context-type="linenumber">38</context>
         </context-group>
-        <note priority="1" from="description">declined</note>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/welcome-professional/welcome-professional.component.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
       </trans-unit>
-      <trans-unit id="e6a27066251ca1e04c5be86ad758380856df2506" datatype="html">
+      <trans-unit id="pending" datatype="html">
         <source>Pending</source>
-        <target>Pendiente</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/welcome-professional/welcome-professional.component.html</context>
           <context context-type="linenumber">42</context>
         </context-group>
-        <note priority="1" from="description">pending</note>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/welcome-professional/welcome-professional.component.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="done" datatype="html">
+        <source>Done</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/welcome-professional/welcome-professional.component.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notDone" datatype="html">
+        <source>Not done</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/welcome-professional/welcome-professional.component.html</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="c37962926a8b34e6d4d5940d21d0ff424ebc7006" datatype="html">
         <source>Load employee</source>
-        <target>Cargar empleado</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/welcome-professional/welcome-professional.component.html</context>
           <context context-type="linenumber">82</context>
@@ -517,7 +492,6 @@
       </trans-unit>
       <trans-unit id="0695dbebd457b1bf63d87c679c27c71f85467a61" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{&apos;Review from &apos;+ email}}"/>  </source>
-        <target><x id="INTERPOLATION" equiv-text="{{&apos;Reseña de &apos;+ email}}"/>  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/show-review-modal/show-review-modal.component.html</context>
           <context context-type="linenumber">2</context>
@@ -527,7 +501,6 @@
       </trans-unit>
       <trans-unit id="5369ea207a2637c2e224371157751d42d088465f" datatype="html">
         <source>Doctor&apos;s Review</source>
-        <target>Notas doctor</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/write-review-modal/write-review-modal.component.html</context>
           <context context-type="linenumber">2</context>
@@ -537,7 +510,6 @@
       </trans-unit>
       <trans-unit id="2aec761817235539aa90603685d1dc048c4ce0dc" datatype="html">
         <source>Age:</source>
-        <target>Edad:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/write-review-modal/write-review-modal.component.html</context>
           <context context-type="linenumber">13</context>
@@ -546,7 +518,6 @@
       </trans-unit>
       <trans-unit id="fa1de4beec16c7638e4778324979284d82c7a288" datatype="html">
         <source>Temp:</source>
-        <target>Temp:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/write-review-modal/write-review-modal.component.html</context>
           <context context-type="linenumber">19</context>
@@ -555,7 +526,6 @@
       </trans-unit>
       <trans-unit id="2ed9f98feda0af1acff01d9e67911e88ca074732" datatype="html">
         <source>Pressure:</source>
-        <target>Presión:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/write-review-modal/write-review-modal.component.html</context>
           <context context-type="linenumber">25</context>
@@ -564,7 +534,6 @@
       </trans-unit>
       <trans-unit id="48010d103c757a85ec301fa9f2e3de177afdaac7" datatype="html">
         <source>Content:</source>
-        <target>Text libre:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/write-review-modal/write-review-modal.component.html</context>
           <context context-type="linenumber">33</context>
@@ -573,7 +542,6 @@
       </trans-unit>
       <trans-unit id="7c1d8ce07ce756f9444261b3ce676e468175c4f7" datatype="html">
         <source>Additional Info</source>
-        <target>Información adicional</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/write-review-modal/write-review-modal.component.html</context>
           <context context-type="linenumber">41</context>
@@ -582,7 +550,6 @@
       </trans-unit>
       <trans-unit id="db5dc261f3e586ec3cb290d241575d1e5a91282a" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{&apos;Comment from &apos;+ appointment.email}}"/>  </source>
-        <target><x id="INTERPOLATION" equiv-text="{{&apos;Comentario de &apos;+ appointment.email}}"/>  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/show-comment-and-answers/show-comment-and-answers.component.html</context>
           <context context-type="linenumber">3</context>
@@ -592,7 +559,6 @@
       </trans-unit>
       <trans-unit id="2de1cbeb7e837bc49671a28a0d79d633d127512a" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{&apos;Comment for medic with &apos;+ email}}"/>  </source>
-        <target><x id="INTERPOLATION" equiv-text="{{&apos;Comentario para medico &apos;+ email}}"/>  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/write-comments-modal/write-comments-modal.component.html</context>
           <context context-type="linenumber">3</context>
@@ -602,7 +568,6 @@
       </trans-unit>
       <trans-unit id="814e74043ced24d7e86f3d7301b0d40144556181" datatype="html">
         <source>Date</source>
-        <target>Fecha</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/today-appointments/today-appointments.component.html</context>
           <context context-type="linenumber">5</context>
@@ -612,7 +577,6 @@
       </trans-unit>
       <trans-unit id="61d028815a55cbdf06f5afcb02f78b2b3818bc50" datatype="html">
         <source>Email</source>
-        <target>Email</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/today-appointments/today-appointments.component.html</context>
           <context context-type="linenumber">6</context>
@@ -622,7 +586,6 @@
       </trans-unit>
       <trans-unit id="d9720d9fb7eb19f52323815e01df551fd619dac6" datatype="html">
         <source>Time</source>
-        <target>Tiempo</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/today-appointments/today-appointments.component.html</context>
           <context context-type="linenumber">7</context>
@@ -632,7 +595,6 @@
       </trans-unit>
       <trans-unit id="4bc9cb3610064c210aabeb56a18ac08015e7e1d3" datatype="html">
         <source>Medic Accepted</source>
-        <target>Medico Acepto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/today-appointments/today-appointments.component.html</context>
           <context context-type="linenumber">8</context>
@@ -642,7 +604,6 @@
       </trans-unit>
       <trans-unit id="804ea15e0bb4ffdb12a26430c52bfc76301929b6" datatype="html">
         <source>Patient Accepted</source>
-        <target>Paciente Acepto</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/today-appointments/today-appointments.component.html</context>
           <context context-type="linenumber">9</context>
@@ -652,7 +613,6 @@
       </trans-unit>
       <trans-unit id="e72da4b8036f0f9fdbd28f6364927551a72c2596" datatype="html">
         <source>Done</source>
-        <target>Hecho</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/today-appointments/today-appointments.component.html</context>
           <context context-type="linenumber">10</context>
@@ -662,13 +622,57 @@
       </trans-unit>
       <trans-unit id="c2d1b68b2afc09a6d95d69e06a4755e40a647a02" datatype="html">
         <source>Actions</source>
-        <target>Acciones</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/today-appointments/today-appointments.component.html</context>
           <context context-type="linenumber">11</context>
         </context-group>
         <note priority="1" from="description"> actions of appointments</note>
         <note priority="1" from="meaning">Table header actions </note>
+      </trans-unit>
+      <trans-unit id="c43b796221ac3a80d249c400cf0231b3d47ea61c" datatype="html">
+        <source>Mark as Done</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/today-appointments/today-appointments.component.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <note priority="1" from="description">@markDone</note>
+      </trans-unit>
+      <trans-unit id="accept" datatype="html">
+        <source>Accept</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/today-appointments/today-appointments.component.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cancel" datatype="html">
+        <source>Cancel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/today-appointments/today-appointments.component.html</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="showComment" datatype="html">
+        <source>Show comment</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/today-appointments/today-appointments.component.html</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+        <note priority="1" from="description">show comment </note>
+      </trans-unit>
+      <trans-unit id="writeReview" datatype="html">
+        <source>Write review</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/today-appointments/today-appointments.component.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="showPatientInfo" datatype="html">
+        <source>Show patient info</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/today-appointments/today-appointments.component.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+        <note priority="1" from="description">show patient info </note>
       </trans-unit>
     </body>
   </file>
