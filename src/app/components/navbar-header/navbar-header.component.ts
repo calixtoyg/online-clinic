@@ -13,6 +13,7 @@ export class NavbarHeaderComponent implements OnInit {
   private modalRef: NgbModalRef;
   loggedIn = false;
   menus: Menu[];
+  isNavbarCollapsed: boolean;
 
   constructor(private modalService: NgbModal, public authentication: AuthenticationService) { }
 
@@ -36,5 +37,9 @@ export class NavbarHeaderComponent implements OnInit {
 
   getRole(): string {
     return localStorage.getItem('role');
+  }
+
+  closeNavbar() {
+    this.isNavbarCollapsed = !this.isNavbarCollapsed;
   }
 }

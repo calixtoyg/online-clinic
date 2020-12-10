@@ -305,6 +305,13 @@
         <note priority="1" from="description"> title</note>
         <note priority="1" from="meaning">Modal Header </note>
       </trans-unit>
+      <trans-unit id="clinic" datatype="html">
+        <source>Clinic</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/navbar-header/navbar-header.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="a8146c64cd8d47998584f82e3860187655516ea0" datatype="html">
         <source>Name</source>
         <context-group purpose="location">
@@ -466,6 +473,20 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/welcome-professional/welcome-professional.component.html</context>
           <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="acceptedByPatient" datatype="html">
+        <source>Accepted By Patient: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/welcome-professional/welcome-professional.component.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="appointmentDone" datatype="html">
+        <source>Appointment done: </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/welcome-professional/welcome-professional.component.html</context>
+          <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="done" datatype="html">
