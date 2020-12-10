@@ -58,6 +58,14 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "es": {
+              "aot": true,
+              "outputPath": "dist/es/",
+              "i18nFile": "src/locale/messages.es.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "es",
+              "i18nMissingTranslation": "error"
             }
           }
         },
@@ -69,6 +77,9 @@
           "configurations": {
             "production": {
               "browserTarget": "bootstrap-boilerplate-angular:build:production"
+            },
+            "es": {
+              "browserTarget": "bootstrap-boilerplate-angular:build:es"
             }
           }
         },

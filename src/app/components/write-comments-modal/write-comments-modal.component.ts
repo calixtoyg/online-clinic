@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {map} from 'rxjs/operators';
 import {CalendarService} from '../../services/calendar.service';
 import {Appointment} from '../../model/appointment';
 import {Value} from '@angular/fire/remote-config';
+import {Subject, Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-write-comments-modal',
@@ -18,6 +19,7 @@ export class WriteCommentsModalComponent implements OnInit {
   @Input() appointment: Appointment;
   questionsForms: FormGroup;
 
+
   constructor(public activeModal: NgbActiveModal, private fb: FormBuilder, private calendarService: CalendarService) {
   }
 
@@ -27,17 +29,27 @@ export class WriteCommentsModalComponent implements OnInit {
   }
 
   saveAnswers() {
-    const questionAnswers = [];
-    Object.entries(this.questionsForms.value).forEach(([key, value]) => questionAnswers.push(value));
-    console.log(questionAnswers);
-    // this.calendarService.getCalendarById(this.calendarId).then(calendar => {
-    //     const index: number = calendar.schedule?.findIndex(eachSchedule => eachSchedule.medicId === this.email);
-    //     const indexOfAppointment = calendar.schedule[index].appointments
-    //       .findIndex(findAppointment => findAppointment.hour === this.appointment.hour && findAppointment.email);
-    //     calendar.schedule[index].appointments[indexOfAppointment] = {...this.appointment, acceptedByProfessional: true};
-    //     this.calendarService.saveCalendar(calendar, this.calendarId);
-    //   }
-    // );
-
+    const questionsAndAnswers = this.questions.map((value, index) => {
+      return {
+        question: value,
+        answer: this.questionsForms.get('question_' + index).value
+      };
+    });
+    // console.log(questionsAndAnswers);
+    //
+    this.calendarService.getCalendarById(this.calendarId).then(calendar => {
+        const index: number = calendar.schedule?.findIndex(eachSchedule => eachSchedule.appointments.filter(app => app.email === this.email && app.hour === this.appointment.hour));
+        const indexOfAppointment = calendar.schedule[index].appointments
+          .findIndex(findAppointment => findAppointment.hour === this.appointment.hour && findAppointment.email === this.appointment.email);
+        calendar.schedule[index].appointments[indexOfAppointment] = {...this.appointment, questionsAndAnswers};
+        this.calendarService.saveCalendar(calendar, this.calendarId).then(v => {
+          this.activeModal.close({successful: true, message: 'Comments have been saved'});
+        }).catch(e => {
+          this.activeModal.close({successful: false, message: 'There was a problem during comments saving'});
+        });
+      }
+    );
   }
+
+
 }

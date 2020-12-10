@@ -76,5 +76,7 @@ export class UsersComponent implements OnInit  {
   }
 
 
-
+  holdHandler($event: number) {
+    console.log($event);
+  }
 }

@@ -7,6 +7,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
+    "int:extract": "ng xi18n --output-path src/locale",
     "e2e": "ng e2e"
   },
   "private": true,
@@ -26,8 +27,11 @@
     "@angular/router": "~10.1.2",
     "@ng-bootstrap/ng-bootstrap": "^7.0.0",
     "bootstrap": "^4.5.0",
+    "chart.js": "^2.9.4",
     "firebase": "^7.13.1",
+    "json2csv": "^5.0.5",
     "moment": "^2.29.1",
+    "ng2-charts": "^2.4.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

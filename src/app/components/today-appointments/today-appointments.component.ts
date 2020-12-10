@@ -1,18 +1,18 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Appointment} from '../../model/appointment';
 import {CalendarService} from '../../services/calendar.service';
-import {Observable} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {map, tap} from 'rxjs/operators';
-import {CreateUserModalComponent} from '../create-user-modal/create-user-modal.component';
-import {Profile} from '../../enum/profile.enum';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ShowReviewModalComponent} from '../show-review-modal/show-review-modal.component';
 import {WriteReviewModalComponent} from '../write-review-modal/write-review-modal.component';
 import {ShowCommentAndAnswersComponent} from '../show-comment-and-answers/show-comment-and-answers.component';
 import {Questions} from '../../enum/questions.enum';
 import {WriteCommentsModalComponent} from '../write-comments-modal/write-comments-modal.component';
-import {AppointmentDTO} from '../../model/appointment-dto';
 import {DatePipe} from '@angular/common';
+import {Calendar} from '../../model/calendar';
+import {AppointmentStatesFilter} from '../../model/appointment-states-filter';
+import App = firebase.app.App;
 
 @Component({
   selector: 'app-today-appointments',
@@ -20,7 +20,7 @@ import {DatePipe} from '@angular/common';
   styleUrls: ['./today-appointments.component.css'],
   providers: [DatePipe]
 })
-export class TodayAppointmentsComponent implements OnInit {
+export class TodayAppointmentsComponent implements OnInit, OnDestroy, OnChanges {
   // TODO falta escribir preguntas y respuestas
   // capaz falta alguno en algunos de los modales de acciones.
   @Input() year: number;
@@ -33,66 +33,123 @@ export class TodayAppointmentsComponent implements OnInit {
     Questions.WAS_IT_QUICK,
     Questions.WAS_THE_PLACE_CLEAN];
 
+  alertMessage: string;
+  alertType: string;
+  subscriptions: Subscription[] = [];
+  @Output() exportAppointments = new EventEmitter<any>();
+  alertSubscription = new Subject<any>();
+  @Input() wholeYear: boolean;
+  @Input() filter: AppointmentStatesFilter[];
+
 
   constructor(private calendarService: CalendarService, private modalService: NgbModal) {
   }
+
 
   ngOnInit(): void {
     if (this.year && this.month && this.day && this.email) {
       this.appointments = this.calendarService.getCalendarsByYearMonthDay({year: this.year, month: this.month, day: this.day})
         .pipe(
           tap(calendar => {
-            this.calendarId = calendar[0].id;
+            this.calendarId = calendar[0]?.id;
           }),
-          map(calendar => calendar[0].schedule
+          map(calendar => calendar[0]?.schedule
             .filter(schedule => schedule.medicId === this.email)
             .find(value => value)?.appointments
           ));
+      // this.appointments = this.calendarService.getCalendarsAppointmentsByYearMonthDay({
+      //   year: this.year,
+      //   month: this.month,
+      //   day: this.day,
+      //   email: this.email
+      // });
+      // this.appointments = this.calendarService.getCalendarsByYearMonthDay({year: this.year, month: this.month, day: this.day})
+      //   .pipe(
+      //     tap(calendar => {
+      //       this.calendarId = calendar[0]?.id;
+      //     }),
+      //     map(calendar => calendar[0]?.schedule
+      //       .filter(schedule => schedule.medicId === this.email)
+      //       .find(value => value)?.appointments
+      //     ));
     }
+    if (this.wholeYear) {
+      const today = new Date();
+      this.appointments = this.calendarService.getCalendarsAppointmentsByYearAndProfessionalEmail(this.year, this.email).pipe(
+        tap(appointments => {
+            this.exportAppointments.emit(appointments);
+          }
+        )
+      );
+    }
+
+    this.subscriptions.push(this.alertSubscription.subscribe(({message, successful}) => {
+      this.alertMessage = message;
+      this.alertType = successful ? 'success' : 'danger';
+    }));
   }
 
   saveAppointment(appointment: Appointment): void {
-    this.calendarService.getCalendarById(this.calendarId).then(calendar => {
+    // @ts-ignore
+    this.calendarService.getCalendarById(appointment.calendarId ? appointment.calendarId : this.calendarId).then(calendar => {
         const index: number = calendar.schedule?.findIndex(eachSchedule => eachSchedule.medicId === this.email);
         const indexOfAppointment = calendar.schedule[index].appointments
           .findIndex(findAppointment => findAppointment.hour === appointment.hour && findAppointment.email === appointment.email);
         calendar.schedule[index].appointments[indexOfAppointment] = {...appointment, done: !appointment.done};
-        this.calendarService.saveCalendar(calendar, this.calendarId);
+        // @ts-ignore
+      this.saveCalendar(calendar, appointment.calendarId ? appointment.calendarId : this.calendarId);
       }
     );
   }
 
   cancelAppointment(appointment: Appointment): void {
-    this.calendarService.getCalendarById(this.calendarId).then(calendar => {
+    // @ts-ignore
+    this.calendarService.getCalendarById(appointment.calendarId ? appointment.calendarId : this.calendarId).then(calendar => {
         const index: number = calendar.schedule?.findIndex(eachSchedule => eachSchedule.medicId === this.email);
         const indexOfAppointment = calendar.schedule[index].appointments
           .findIndex(findAppointment => findAppointment.hour === appointment.hour && findAppointment.email === appointment.email);
         calendar.schedule[index].appointments[indexOfAppointment] = {...appointment, acceptedByProfessional: false};
-        this.calendarService.saveCalendar(calendar, this.calendarId);
+        // @ts-ignore
+        this.saveCalendar(calendar, appointment.calendarId ? appointment.calendarId : this.calendarId);
       }
     );
   }
 
   acceptAppointment(appointment: Appointment): void {
-    this.calendarService.getCalendarById(this.calendarId).then(calendar => {
+    // @ts-ignore
+    this.calendarService.getCalendarById(appointment.calendarId ? appointment.calendarId : this.calendarId).then(calendar => {
         const index: number = calendar.schedule?.findIndex(eachSchedule => eachSchedule.medicId === this.email);
         const indexOfAppointment = calendar.schedule[index].appointments
           .findIndex(findAppointment => findAppointment.hour === appointment.hour && findAppointment.email === appointment.email);
         calendar.schedule[index].appointments[indexOfAppointment] = {...appointment, acceptedByProfessional: true};
-        this.calendarService.saveCalendar(calendar, this.calendarId);
+        // @ts-ignore
+      this.saveCalendar(calendar, appointment.calendarId ? appointment.calendarId : this.calendarId);
       }
     );
   }
 
-  showReview({review, email}: Appointment): void {
+  // @ts-ignore
+  showReview(appointment: Appointment): void {
 
-    const modalRef = this.modalService.open(ShowReviewModalComponent);
-    modalRef.componentInstance.email =  email;
-    modalRef.componentInstance.review = review;
+    const modalRef = this.modalService.open(WriteReviewModalComponent);
+    modalRef.componentInstance.email = appointment.email;
+    modalRef.componentInstance.review = appointment.review;
+    modalRef.componentInstance.appointment = appointment;
+    // @ts-ignore
+    modalRef.componentInstance.calendarId = appointment.calendarId ? appointment.calendarId : this.calendarId;
+    modalRef.componentInstance.readOnly = false;
   }
 
-  writeReview(): void {
+  writeReview(appointment: Appointment): void {
     const modalRef = this.modalService.open(WriteReviewModalComponent);
+    modalRef.componentInstance.appointment = appointment;
+    // @ts-ignore
+    modalRef.componentInstance.calendarId = appointment.calendarId ? appointment.calendarId : this.calendarId;
+    modalRef.result.then(value => {
+      this.alertSubscription.next(value);
+    }).catch(error => {
+      this.alertSubscription.next(error);
+    });
   }
 
   writeComment(appointment: Appointment): void {
@@ -102,11 +159,9 @@ export class TodayAppointmentsComponent implements OnInit {
     modalRef.componentInstance.calendarId = this.calendarId;
   }
 
-  showComment({comment, email, answers}: Appointment): void {
+  showComment(appointment: Appointment): void {
     const modalRef = this.modalService.open(ShowCommentAndAnswersComponent);
-    modalRef.componentInstance.email = email;
-    modalRef.componentInstance.questions = this.questions;
-    modalRef.componentInstance.answers = answers;
+    modalRef.componentInstance.appointment = appointment;
   }
 
   getIconProfessional(appointment: Appointment): string {
@@ -121,7 +176,7 @@ export class TodayAppointmentsComponent implements OnInit {
 
   getClassAcceptedByProfessional(appointment: Appointment): string {
     if (appointment.acceptedByProfessional === undefined || appointment.acceptedByProfessional === '') {
-     return 'black';
+      return 'black';
     } else if (appointment.acceptedByProfessional === false) {
       return 'cancelled';
     } else if (appointment.acceptedByProfessional === true) {
@@ -129,7 +184,7 @@ export class TodayAppointmentsComponent implements OnInit {
     }
   }
 
-  getClassAcceptedByPatient({appointment}: AppointmentDTO): string {
+  getClassAcceptedByPatient(appointment: Appointment): string {
     if (appointment.acceptedByPatient === undefined || appointment.acceptedByPatient === '') {
       return 'black';
     } else if (appointment.acceptedByPatient === false) {
@@ -188,7 +243,7 @@ export class TodayAppointmentsComponent implements OnInit {
     if (appointment.done === true) {
       return 'Appoint has been completed';
     } else if (!appointment.done || appointment.done === false) {
-      return 'Appointment has been completed';
+      return 'Appointment has not been completed yet';
     }
   }
 
@@ -206,5 +261,41 @@ export class TodayAppointmentsComponent implements OnInit {
     } else if (!appointment.done || appointment.done === false) {
       return 'black';
     }
+  }
+
+  private saveCalendar(calendar: Calendar, calendarId: string): void {
+    this.calendarService.saveCalendar(calendar, calendarId).then(value => {
+      this.alertSubscription.next({successful: true, message: 'Saved appointment'});
+    }).catch(error => {
+      this.alertSubscription.next({successful: false, message: 'Error during saving of appointment'});
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.filter && changes.filter.currentValue) {
+      this.filter = changes.filter.currentValue;
+    }
+  }
+
+  isAccepted(appointment: Appointment): boolean {
+    console.log('entro mas veces de las q debias');
+    return appointment.acceptedByProfessional === true;
+  }
+
+  isCancelled(appointment: Appointment): boolean {
+    return appointment.acceptedByProfessional === false;
+  }
+
+  isAcceptedOrCancelled(appointment: Appointment) {
+    return typeof appointment.acceptedByProfessional === 'boolean';
+  }
+
+  isAcceptedByPatient(appointment: Appointment) {
+    return appointment.acceptedByPatient === true;
   }
 }

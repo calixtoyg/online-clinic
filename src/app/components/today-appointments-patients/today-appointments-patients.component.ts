@@ -1,10 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Appointment} from '../../model/appointment';
-import App = firebase.app.App;
-import {Observable} from 'rxjs';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, QueryList, SimpleChanges, ViewChildren} from '@angular/core';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {CalendarService} from '../../services/calendar.service';
-import {map} from 'rxjs/operators';
-import {ShowReviewModalComponent} from '../show-review-modal/show-review-modal.component';
+import {map, tap} from 'rxjs/operators';
 import {WriteReviewModalComponent} from '../write-review-modal/write-review-modal.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AppointmentDTO} from '../../model/appointment-dto';
@@ -12,6 +9,9 @@ import {WriteCommentsModalComponent} from '../write-comments-modal/write-comment
 import {Questions} from '../../enum/questions.enum';
 import {Calendar} from '../../model/calendar';
 import {DatePipe} from '@angular/common';
+import {SortableDirective, SortEvent} from '../../directives/sortable.directive';
+import {AppointmentFilter} from '../../model/appointment-filter';
+import {Appointment} from '../../model/appointment';
 
 @Component({
   selector: 'app-today-appointments-patients',
@@ -19,12 +19,21 @@ import {DatePipe} from '@angular/common';
   styleUrls: ['./today-appointments-patients.component.css'],
   providers: [DatePipe]
 })
-export class TodayAppointmentsPatientsComponent implements OnInit {
-  appointments: Observable<AppointmentDTO[]>;
+export class TodayAppointmentsPatientsComponent implements OnInit, OnDestroy, OnChanges {
   @Input() email: string;
+  @Input() filter: AppointmentFilter;
+  @ViewChildren(SortableDirective) headers: QueryList<SortableDirective>;
+  appointments: Observable<AppointmentDTO[]>;
   questions = [Questions.GOOD_ATTENTION,
     Questions.WAS_IT_QUICK,
     Questions.WAS_THE_PLACE_CLEAN];
+  alertMessage: string;
+  alertType: string;
+  subscriptions: Subscription[] = [];
+  private alertSubscription = new Subject<any>();
+  appointmentsCopy: Observable<AppointmentDTO[]>;
+  @Output() allDates = new EventEmitter<Date[]>();
+
 
   constructor(private calendarService: CalendarService, private modalService: NgbModal) {
   }
@@ -41,119 +50,31 @@ export class TodayAppointmentsPatientsComponent implements OnInit {
                   return {
                     appointment,
                     calendarId: calendar.id,
-                    date: new Date(calendar.year, calendar.month, calendar.day, Number(hoursAndMinutes[0]), Number(hoursAndMinutes[1]))
+                    date: new Date(calendar.year, calendar.month, calendar.day, Number(hoursAndMinutes[0]), Number(hoursAndMinutes[1])),
+                    medicName: schedule.medicName,
                   } as AppointmentDTO;
                 }
               })))
         .filter(value => value))
-    );
+    ).pipe(tap(
+      value => {
+        this.allDates.emit(value.map(date => date.date));
+      }
+    ));
+
+
+    this.subscriptions.push(this.alertSubscription.subscribe(({message, successful}) => {
+      this.alertMessage = message;
+      this.alertType = successful ? 'success' : 'danger';
+    }));
   }
 
+  showReview(appointment: AppointmentDTO): void {
 
-  getIconProfessional({appointment}: AppointmentDTO): string {
-    if (appointment.acceptedByProfessional === undefined || appointment.acceptedByProfessional === '') {
-      return 'pending_action';
-    } else if (appointment.acceptedByProfessional === false) {
-      return 'clear';
-    } else if (appointment.acceptedByProfessional === true) {
-      return 'green-icon';
-    }
-  }
-
-  getClassAcceptedByProfessional({appointment}: AppointmentDTO): string {
-    if (appointment.acceptedByProfessional === undefined || appointment.acceptedByProfessional === '') {
-      return 'black';
-    } else if (appointment.acceptedByProfessional === false) {
-      return 'cancelled';
-    } else if (appointment.acceptedByProfessional === true) {
-      return 'green-icon';
-    }
-  }
-
-  getClassAcceptedByPatient({appointment}: AppointmentDTO): string {
-    if (appointment.acceptedByPatient === undefined || appointment.acceptedByPatient === '') {
-      return 'black';
-    } else if (appointment.acceptedByPatient === false) {
-      return 'cancelled';
-    } else if (appointment.acceptedByPatient === true) {
-      return 'green-icon';
-    }
-  }
-
-  getIconAcceptedByProfessional({appointment}: AppointmentDTO): string {
-    if (appointment.acceptedByProfessional === undefined || appointment.acceptedByProfessional === '') {
-      return 'pending_action';
-    } else if (appointment.acceptedByProfessional === false) {
-      return 'clear';
-    } else if (appointment.acceptedByProfessional === true && appointment.acceptedByPatient === true) {
-      return 'done_all';
-    } else if (appointment.acceptedByProfessional === true) {
-      return 'check';
-    }
-  }
-
-  getIconAcceptedByPatient({appointment}: AppointmentDTO): string {
-    if (appointment.acceptedByPatient === undefined || appointment.acceptedByPatient === '') {
-      return 'pending_action';
-    } else if (appointment.acceptedByPatient === false) {
-      return 'clear';
-    } else if (appointment.acceptedByProfessional === true && appointment.acceptedByPatient === true) {
-      return 'done_all';
-    } else if (appointment.acceptedByPatient === true) {
-      return 'check';
-    }
-  }
-
-  getPatientTooltip({appointment}: AppointmentDTO): string {
-    if (appointment.acceptedByPatient === undefined || appointment.acceptedByPatient === '') {
-      return 'Appoint is pending acceptance';
-    } else if (appointment.acceptedByPatient === false) {
-      return 'Appointment has been rejected by the patient';
-    } else if (appointment.acceptedByPatient === true) {
-      return 'Appointment has been accepted by the patient';
-    }
-  }
-
-
-  getProfessionalTooltip({appointment}: AppointmentDTO): string {
-    if (appointment.acceptedByProfessional === undefined || appointment.acceptedByProfessional === '') {
-      return 'Appoint is pending acceptance';
-    } else if (appointment.acceptedByProfessional === false) {
-      return 'Appointment has been rejected by the medic';
-    } else if (appointment.acceptedByProfessional === true) {
-      return 'Appointment has been accepted by the medic';
-    }
-  }
-
-  getDoneTooltip({appointment}: AppointmentDTO): string {
-    if (appointment.done === true) {
-      return 'Appoint has been completed';
-    } else if (!appointment.done || appointment.done === false) {
-      return 'Appointment has been completed';
-    }
-  }
-
-  getDoneIcon({appointment}: AppointmentDTO): string {
-    if (appointment.done === true) {
-      return 'done';
-    } else if (!appointment.done || appointment.done === false) {
-      return 'pending';
-    }
-  }
-
-  getDoneClass({appointment}: AppointmentDTO): string {
-    if (appointment.done === true) {
-      return 'green-icon';
-    } else if (!appointment.done || appointment.done === false) {
-      return 'black';
-    }
-  }
-
-  showReview({appointment}: AppointmentDTO): void {
-
-    const modalRef = this.modalService.open(ShowReviewModalComponent);
-    modalRef.componentInstance.email = appointment.email;
-    modalRef.componentInstance.review = appointment.review;
+    const modalRef = this.modalService.open(WriteReviewModalComponent);
+    modalRef.componentInstance.email = appointment.medicName;
+    modalRef.componentInstance.review = appointment.appointment.review;
+    modalRef.componentInstance.readOnly = true;
   }
 
   writeReview({appointment, calendarId}: AppointmentDTO): void {
@@ -167,6 +88,12 @@ export class TodayAppointmentsPatientsComponent implements OnInit {
     modalRef.componentInstance.questions = this.questions;
     modalRef.componentInstance.appointment = appointment;
     modalRef.componentInstance.calendarId = calendarId;
+    modalRef.result.then((value) => {
+      this.alertSubscription.next(value);
+    }).catch((error) => {
+      this.alertSubscription.next(error);
+    });
+
   }
 
   saveAppointment({appointment, calendarId}: AppointmentDTO): void {
@@ -175,7 +102,7 @@ export class TodayAppointmentsPatientsComponent implements OnInit {
         const indexOfAppointment = calendar.schedule[index].appointments
           .findIndex(findAppointment => findAppointment.hour === appointment.hour && findAppointment.email === appointment.email);
         calendar.schedule[index].appointments[indexOfAppointment] = {...appointment, done: true};
-        this.calendarService.saveCalendar(calendar, calendarId);
+        this.saveCalendar(calendar, calendarId);
       }
     );
   }
@@ -186,7 +113,7 @@ export class TodayAppointmentsPatientsComponent implements OnInit {
         const indexOfAppointment = calendar.schedule[index].appointments
           .findIndex(findAppointment => findAppointment.hour === appointment.hour && findAppointment.email === appointment.email);
         calendar.schedule[index].appointments[indexOfAppointment] = {...appointment, acceptedByPatient: false};
-        this.calendarService.saveCalendar(calendar, calendarId);
+        this.saveCalendar(calendar, calendarId);
       }
     );
   }
@@ -197,9 +124,60 @@ export class TodayAppointmentsPatientsComponent implements OnInit {
         const indexOfAppointment = calendar.schedule[index].appointments
           .findIndex(findAppointment => findAppointment.hour === appointment.hour && findAppointment.email === appointment.email);
         calendar.schedule[index].appointments[indexOfAppointment] = {...appointment, acceptedByPatient: true};
-        this.calendarService.saveCalendar(calendar, calendarId);
+        this.saveCalendar(calendar, calendarId);
       }
     );
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+  private saveCalendar(calendar: Calendar, calendarId: string): void {
+    this.calendarService.saveCalendar(calendar, calendarId).then(value => {
+      this.alertSubscription.next({successful: true, message: 'Saved appointment'});
+    }).catch(error => {
+      this.alertSubscription.next({successful: false, message: 'Error during saving of appointment'});
+    });
+  }
+
+  onSort({column, direction}: SortEvent) {
+    // resetting other headers
+    console.log(arguments);
+
+    this.headers.forEach(header => {
+      if (header.sortable !== column) {
+        header.direction = '';
+      }
+    });
+
+    // this.service.sortColumn = column;
+    // this.service.sortDirection = direction;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.filter.currentValue) {
+        this.filter = changes.filter.currentValue;
+    }
+
+    // filter(value => value
+    //   .filter(eachDTO =>
+    //     today.getFullYear() === eachDTO.date.getFullYear()
+    //     && today.getMonth() === eachDTO.date.getMonth()
+    //     && today.getDate() === eachDTO.date.getDate()
+    //   )));
+  }
+
+
+  isAccepted(appointment: Appointment) {
+    return appointment.acceptedByProfessional === true;
+  }
+
+  isAcceptedByPatient(appointment: Appointment) {
+    return appointment.acceptedByPatient === true;
+  }
+
+  isAcceptedOrCancelled(appointment: Appointment) {
+    return typeof appointment.acceptedByProfessional === 'boolean';
+  }
 }

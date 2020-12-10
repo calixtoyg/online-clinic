@@ -4,4 +4,5 @@ export interface AppointmentDTO {
   appointment: Appointment;
   calendarId: string;
   date: Date;
+  medicName: string;
 }

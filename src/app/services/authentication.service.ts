@@ -84,6 +84,10 @@ export class AuthenticationService {
     return this.afAuth.authState;
   }
 
+  public getCurrentUser(): User {
+    return firebase.auth().currentUser;
+  }
+
   getExpiration() {
     const expiration = localStorage.getItem('expires_at');
     return moment(expiration);

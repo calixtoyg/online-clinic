@@ -104,16 +104,17 @@ export class CreateUserModalComponent implements OnInit, OnDestroy {
   }
 
   submitAfterCaptcha() {
-    console.log(this.userForm.valid);
-    console.log(this.userForm.value.specializations);
     if (this.userForm.valid) {
       this.authentication.createUser(this.userForm.value.email, this.userForm.value.password, {
         ...this.userForm.value,
+        specializations: this.chipSpecializations.map(value => value.toLowerCase()),
         firstImage: this.firstImage,
         secondImage: this.secondImage
-      }).finally(
-        this.activeModal.close
-      );
+      }).then((value) =>
+        this.activeModal.close({successful: true, message: 'User was saved successfully'})
+      ).catch(error => {
+        this.activeModal.close({successful: false, message: 'There was an error during creation of employee'})
+      });
     }
   }
 

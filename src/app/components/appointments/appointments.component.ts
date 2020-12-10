@@ -1,14 +1,13 @@
-import {Component, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Speciality} from '../../enum/speciality.enum';
-import {MatStepper, MatVerticalStepper} from '@angular/material/stepper';
+import {MatStepper} from '@angular/material/stepper';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import {UsersService} from '../../services/users.service';
 import {UserCreation} from '../../model/user-creation';
 import {Observable} from 'rxjs';
 import {Profile} from '../../enum/profile.enum';
 import {Calendar} from '../../model/calendar';
-import {MatOptionSelectionChange} from '@angular/material/core';
 import {map, mergeMap, startWith, tap} from 'rxjs/operators';
 import {CalendarService} from '../../services/calendar.service';
 import {Schedule} from '../../model/schedule';

@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {Appointment} from '../../model/appointment';
 
 @Component({
   selector: 'app-show-comment-and-answers',
@@ -7,14 +8,13 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./show-comment-and-answers.component.css']
 })
 export class ShowCommentAndAnswersComponent implements OnInit {
-  @Input() email: string;
-  @Input() questions: string[];
-  @Input() answers: string[];
+  @Input() appointment: Appointment;
 
-  constructor(public activeModal: NgbActiveModal) { }
+  constructor(public activeModal: NgbActiveModal) {
+  }
 
   ngOnInit(): void {
-    console.log(this.questions);
+    console.log();
   }
 
 }

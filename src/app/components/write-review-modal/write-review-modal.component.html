@@ -1,31 +1,76 @@
 <div class="modal-header">
-  <h4 class="modal-title" i18n="Modal Header | title">Create User </h4>
+  <p class="modal-title text-center h4" i18n="Modal Header | title review">Doctor's Review</p>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <div class="modal-body">
   <form [formGroup]="reviewForm">
+    <!--    edad,temperatura corporal,presión-->
+    <div class="row">
+      <div class="col-sm-6 col-md-4">
+        <div class="form-group">
+          <label for="age" i18n="form review age">Age:</label>
+          <input id="age" formControlName="age" class="form-control" placeholder="Age" i18n="form review age placeholder" type="number" [(ngModel)]="review && review.age" [readOnly]="readOnly">
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <div class="form-group">
+          <label for="temperature" i18n="form review temperature">Temp:</label>
+          <input id="temperature" formControlName="temperature" class="form-control" placeholder="Temperature" i18n="form review temperature placeholder" type="number" [(ngModel)]="review && review.temperature" [readOnly]="readOnly">
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <div class="form-group">
+          <label for="pressure" i18n="form review pressure">Pressure:</label>
+          <input id="pressure" formControlName="pressure" class="form-control" placeholder="Pressure" i18n="form review pressure placeholder" type="text" [(ngModel)]="review && review.pressure" [readOnly]="readOnly">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="freeText" i18n="form freeText">Content:</label>
+          <textarea class="form-control" formControlName="freeText" id="freeText" rows="3" [(ngModel)]="review && review.freeText" [readOnly]="readOnly"></textarea>
+        </div>
+      </div>
 
-    <div class="form-group">
-      <label for="score" i18n="score">Score:</label>
-      <label for="score" i18n="form score placeholder">Score (1 to 5)</label>
-      <select class="form-control" id="score">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-      </select>
     </div>
-    <div class="form-group">
-      <label for="content" i18n="form contet">Content:</label>
-      <textarea class="form-control" id="content" rows="3"></textarea>
+    <div class="row align-items-center mb-2 mt-4">
+      <div class="col-6">
+        <p class="text h6" i18n="Additional Info">Additional Info</p>
+      </div>
+      <div class="col-6">
+        <button *ngIf="!readOnly" type="button" class="btn btn-secondary mb-3" (click)="addField()">Add field</button>
+      </div>
     </div>
+
+    <div class="row align-content-center align-items-center mt-2 mb-2 mr-1 ml-1">
+
+      <div class="row" *ngFor="let newField of fields">
+          <div class="col-4">
+            <div class="form-group">
+              <input [formControlName]="getKey(newField.id)" class="form-control" placeholder="Name" type="text" [(ngModel)]="newField.key" [readOnly]="readOnly">
+            </div>
+          </div>
+          <div class="col-5">
+            <div class="form-group">
+              <input [formControlName]="getValue(newField.id)" class="form-control" placeholder="Value" type="text" [(ngModel)]="newField.value" [readOnly]="readOnly">
+            </div>
+          </div>
+          <div class="col-3"  *ngIf="!readOnly">
+            <div class="form-group">
+              <button type="button" class="btn btn-danger form-control" (click)="removeField(newField.id)">Remove</button>
+            </div>
+          </div>
+      </div>
+
+    </div>
+
   </form>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-primary" [disabled]="!this.reviewForm.valid" (click)="submit()">Submit</button>
+  <button *ngIf="!readOnly" type="button" class="btn btn-primary" [disabled]="!reviewForm.valid" (click)="submit()">Submit</button>
   <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
 </div>
 

@@ -14,3 +14,4 @@ export interface Schedule {
   medicName?: string;
   appointments: Appointment[];
 }
+// carlossanchez@mailinator.com

@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {Calendar} from '../model/calendar';
 import {Observable, pipe} from 'rxjs';
-import {UserCreation} from '../model/user-creation';
-import {first, map, take} from 'rxjs/operators';
+import {first, map, take, tap} from 'rxjs/operators';
+import {AppointmentWithCalendarId} from '../model/appointment-with-calendar-id';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,6 @@ import {first, map, take} from 'rxjs/operators';
 export class CalendarService {
 
   constructor(private store: AngularFirestore) {
-
   }
 
   saveCalendars(calendars: Calendar[]): Promise<void> {
@@ -69,6 +68,35 @@ export class CalendarService {
       );
   }
 
+  getCalendarsAppointmentsByYearMonthDay({year, month, day, email}: { year: number, month: number, day: number, email: string }): Observable<AppointmentWithCalendarId[]> {
+    return this.store.collection<Calendar>('calendar', ref => ref
+      .where('year', '==', year)
+      .where('month', '==', month)
+      .where('day', '==', day))
+      .snapshotChanges()
+      .pipe(
+        map(dataArray => dataArray.map(each => {
+          const data = each.payload.doc.data() as Calendar;
+          data.id = each.payload.doc.id;
+          return data;
+        }))
+      ).pipe(
+        first()
+      ).pipe(
+        map(calendars => calendars.flatMap(calendar => {
+          return calendar.schedule
+            .filter(schedule => schedule.medicId === email)
+            .flatMap(value => value.appointments.map(appointment => {
+                return {
+                  ...appointment,
+                  calendarId: calendar.id,
+                  date: new Date(calendar.year, calendar.month, calendar.day),
+                } as AppointmentWithCalendarId;
+              })
+            );
+        })));
+  }
+
   getCalendarById(calendarId: string): Promise<Calendar> {
     return this.store.doc<Calendar>('calendar/' + calendarId).snapshotChanges()
       .pipe(
@@ -78,5 +106,47 @@ export class CalendarService {
           return data;
         }))
       .pipe(take(1)).toPromise();
+  }
+
+  getCalendarsAppointmentsByYearAndProfessionalEmail(year: number, email: string): Observable<any> {
+    return this.getCalendarsByYear(year).pipe(
+      map(
+        calendarArray => {
+          return calendarArray
+            .flatMap(calendar => {
+              return calendar.schedule
+                .filter(schedule => schedule.medicId === email)
+                .flatMap(value => value.appointments.map(appointment => {
+                    return {
+                      ...appointment,
+                      calendarId: calendar.id,
+                      date: new Date(calendar.year, calendar.month, calendar.day)
+                    } as AppointmentWithCalendarId;
+                  })
+                );
+            });
+        }
+      )
+    );
+  }
+
+  getCalendarsAppointmentsByYear(year: number): Observable<any> {
+    return this.getCalendarsByYear(year).pipe(
+      map(
+        calendarArray => {
+          return calendarArray
+            .flatMap(calendar => calendar.schedule
+              .flatMap(value => value.appointments.map(appointment => {
+                  return {...appointment, calendarId: calendar.id, date: new Date(calendar.year, calendar.month, calendar.day)};
+                })
+              ));
+        }
+      )
+    )
+      .pipe(
+        tap(value => {
+          console.log(value);
+        })
+      );
   }
 }

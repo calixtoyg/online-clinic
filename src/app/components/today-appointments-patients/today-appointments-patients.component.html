@@ -1,56 +1,61 @@
 <table class="table table-striped">
   <thead class="text-center">
   <tr>
-    <th scope="col">#</th>
-    <th scope="col">Time</th>
-    <th scope="col">Date</th>
-    <th scope="col">Medic Accepted</th>
-    <th scope="col">Patient Accepted</th>
-    <th scope="col">Done</th>
+    <th scope="col" (sort)="onSort($event)">#</th>
+    <th scope="col" (sort)="onSort($event)">Time</th>
+    <th scope="col" (sort)="onSort($event)">Date</th>
+    <th scope="col" (sort)="onSort($event)">Medic name</th>
+    <th scope="col" (sort)="onSort($event)">Medic Accepted</th>
+    <th scope="col" (sort)="onSort($event)">Patient Accepted</th>
+    <th scope="col" (sort)="onSort($event)">Done</th>
     <th scope="col">Actions</th>
   </tr>
   </thead>
   <tbody>
-  <tr class="text-center" *ngFor="let appointment of appointments | async | hour:'asc'; index as i">
+  <tr class="text-center" *ngFor="let appointment of appointments | async | filterPatients:filter ; index as i">
     <td>{{ i + 1 }}</td>
     <td>
       {{ appointment.appointment.hour}}
     </td>
     <td>
-      {{appointment.date | date:'shortDate'}}
+      {{appointment.date | date:'dd/MM/yyyy'}}
+    </td>
+    <td>
+      {{appointment.medicName}}
     </td>
     <td>
       <!--      [ngClass]="appointment.done ? 'green-icon' : ''"-->
-      <mat-icon [matTooltip]="getProfessionalTooltip(appointment)"
-                [ngClass]="getClassAcceptedByProfessional(appointment)">{{getIconAcceptedByProfessional(appointment)}}</mat-icon>
-
-    </td>
-    <td>
-      <!--      [ngClass]="appointment.done ? 'green-icon' : ''"-->
-      <mat-icon [matTooltip]="getPatientTooltip(appointment)"
-                [ngClass]="getClassAcceptedByPatient(appointment)">{{getIconAcceptedByPatient(appointment)}}</mat-icon>
+      <mat-icon [matTooltip]="appointment.appointment | tooltip:'acceptedByProfessional'"
+                [ngClass]="appointment.appointment | class:'acceptedByProfessional'">{{appointment.appointment | icon:'acceptedByProfessional'}}</mat-icon>
 
     </td>
     <td>
       <!--      [ngClass]="appointment.done ? 'green-icon' : ''"-->
-      <mat-icon [matTooltip]="getDoneTooltip(appointment)"
-                [ngClass]="getDoneClass(appointment)">{{getDoneIcon(appointment)}}</mat-icon>
+      <mat-icon [matTooltip]="appointment.appointment | tooltip:'acceptedByPatient'"
+                [ngClass]="appointment.appointment | class:'acceptedByPatient'">{{appointment.appointment | icon:'acceptedByPatient'}}</mat-icon>
 
     </td>
     <td>
-      <div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown">
-        <button class="btn btn-sm btn-outline-primary" id="dropdownManual" ngbDropdownAnchor (focus)="myDrop.open()">Actions</button>
-        <div ngbDropdownMenu aria-labelledby="dropdownManual">
-          <button ngbDropdownItem (click)="saveAppointment(appointment)">{{appointment.appointment.done ? 'Cancel done' : 'Done'}}</button>
-          <button ngbDropdownItem (click)="acceptAppointment(appointment)">Accept</button>
-          <button ngbDropdownItem (click)="cancelAppointment(appointment)">Cancel</button>
-          <div *ngIf="appointment.appointment.done">
-            <button ngbDropdownItem (click)="showReview(appointment)">Show review</button>
-            <button ngbDropdownItem (click)="writeComment(appointment)">Write review</button>
-          </div>
+      <!--      [ngClass]="appointment.done ? 'green-icon' : ''"-->
+      <mat-icon [matTooltip]="appointment.appointment | tooltip:'done'"
+                [ngClass]="appointment.appointment | class:'done'">{{appointment.appointment | icon:'done'}}</mat-icon>
 
-        </div>
+    </td>
+    <td>
+      <button *ngIf="appointment.appointment.acceptedByPatient && appointment.appointment.acceptedByProfessional && !appointment.appointment.done" class="btn btn-secondary btn-sm"
+              (click)="saveAppointment(appointment)">{{'Done'}}</button>
+      <div *ngIf="appointment.appointment | cancelledByPatient ">
+        <button class="btn btn-primary btn-sm" (click)="acceptAppointment(appointment)">Accept</button>
+        <button class="btn btn-danger btn-sm" (click)="cancelAppointment(appointment)">Cancel</button>
       </div>
+      <div *ngIf="appointment.appointment.done">
+
+        <div *ngIf="appointment.appointment.review">
+          <button class="btn btn-outline-dark btn-sm mb-1" (click)="showReview(appointment)">Show review</button>
+        </div>
+        <button class="btn btn-outline-dark btn-sm"  (click)="writeComment(appointment)">Write comment</button>
+      </div>
+
       <!--      <button type="button" class="btn btn-sm btn-group-sm btn-secondary" (click)="saveAppointment(appointment)">Accept</button>-->
       <!--      <button type="button" class="btn btn-sm btn-group-sm btn-success" (click)="saveAppointment(appointment)">Done</button>-->
       <!--      <button type="button" class="btn btn-sm btn-group-sm btn-warning" (click)="saveAppointment(appointment)">Cancel</button>-->
@@ -59,3 +64,5 @@
   </tr>
   </tbody>
 </table>
+<ngb-alert #alert [type]="alertType" *ngIf="alertMessage" type="success" (close)="alertMessage = ''">{{alertMessage}}
+</ngb-alert>

@@ -16,9 +16,9 @@ import {ForgotPasswordComponent} from '../forgot-password/forgot-password.compon
 export class RedirectLoginComponent implements OnInit, OnDestroy {
   subs: Subscription[] = [];
   loginForm: FormGroup;
+  @ViewChild('alert',  {static: false}) alert: NgbAlert;
   alertMessage: string;
   alertType: string;
-  @ViewChild('alert',  {static: false}) alert: NgbAlert;
   private alertSubscription = new Subject<any>();
 
   constructor(private fb: FormBuilder, public authentication: AuthenticationService, private router: Router, private usersService: UsersService, private modalService: NgbModal) {

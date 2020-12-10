@@ -11,6 +11,7 @@ import {RedirectLoginComponent} from './components/redirect-login/redirect-login
 import {WelcomePatientComponent} from './components/welcome-patient/welcome-patient.component';
 import {WelcomeAdminComponent} from './components/welcome-admin/welcome-admin.component';
 import {WelcomeProfessionalComponent} from './components/welcome-professional/welcome-professional.component';
+import {ProfessionalStatisticsComponent} from './components/professional-statistics/professional-statistics.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/login']);
 
@@ -52,6 +53,11 @@ const routes: Routes = [
   },
   {
     path: 'test', component: TestComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: {authGuardPipe: redirectUnauthorizedToLogin}
+  },
+  {
+    path: 'statistics', component: ProfessionalStatisticsComponent,
     canActivate: [AngularFireAuthGuard],
     data: {authGuardPipe: redirectUnauthorizedToLogin}
   },

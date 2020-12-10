@@ -7,6 +7,7 @@
     <th scope="col" i18n="Column name | Column name for specialization">Specialization</th>
     <th scope="col" i18n="Column name | Column name for firstimage">Picture #1</th>
     <th scope="col" i18n="Column name | Column name for secondimage">Picture #2</th>
+    <th scope="col" i18n="Column name | Column name for actions">Actions</th>
   </tr>
   </thead>
   <tbody>
@@ -17,6 +18,7 @@
     <td>{{user.specialization}}</td>
     <td><img [src]="user.firstImage" class="mr-2" style="width: 20px" /></td>
     <td><img [src]="user.secondImage" class="mr-2" style="width: 20px" /></td>
+    <td><button type="button" appHoldable (holdTime)="holdHandler($event)" class="btn btn-sm btn-outline-warning wrapper">Borrar</button></td>
 <!--    <td><img [src]="" class="mr-2" style="width: 20px" /></td>-->
 <!--    <td><img [src]="" class="mr-2" style="width: 20px" /></td>-->
   </tr>
